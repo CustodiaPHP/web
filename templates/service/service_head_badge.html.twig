@@ -1,0 +1,9 @@
+{% if service.currentStatus == 4 %}
+    {% include 'elements/overview/major.html.twig' with {'text': service.name ~ ' has major outages'} %}
+{% elseif service.currentStatus == 3 %}
+    {% include 'elements/overview/partial.html.twig' with {'text': service.name ~ ' has partial outages'}  %}
+{% elseif service.currentStatus == 2 %}
+    {% include 'elements/overview/performance.html.twig' with {'text': service.name ~ ' is having performance issues'} %}
+{% else %}
+    {% include 'elements/overview/operational.html.twig' with {'text': service.name ~ ' is operational'} %}
+{% endif %}

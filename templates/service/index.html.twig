@@ -1,0 +1,22 @@
+{% extends 'layouts/frontend.html.twig' %}
+
+{% block title %}AE | Status{% endblock %}
+
+{% block content %}
+<div class="h-screen dark:bg-gray-700">
+    <div class="pt-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" id="head-badge" x-service="{{ service.id }}">
+            {% include 'service/service_head_badge.html.twig' with {'service': service}%}
+        </div>
+    </div>
+    <div class="py-5">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="overflow-hidden shadow-md bg-gray-100 dark:bg-gray-900 dark:text-gray-400 rounded-xl">
+                <div class="p-1">
+                    <canvas class="w-full h-auto dark:text-gray-400" x-service="{{ service.id }}" id="log-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
