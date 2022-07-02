@@ -1,0 +1,11 @@
+{% if incident.status == 4 %}
+    {% include 'elements/incidents/major.html.twig' with {'incident': incident} %}
+{% elseif incident.status == 3 %}
+    {% include 'elements/incidents/partial.html.twig' with {'incident': incident}  %}
+{% elseif incident.status == 2 %}
+    {% include 'elements/incidents/performance.html.twig' with {'incident': incident}  %}
+{% elseif incident.status == 1 %}
+    {% include 'elements/incidents/operational.html.twig' with {'incident': incident}  %}
+{% else %}
+    {% include 'elements/incidents/maintenance.html.twig' with {'incident': incident}  %}
+{% endif %}

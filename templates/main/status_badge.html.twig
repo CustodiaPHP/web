@@ -1,0 +1,11 @@
+{% if service.currentStatus == 4 %}
+    {% include 'elements/status_badges/major.html.twig' with {'id': service.id}%}
+{% elseif service.currentStatus == 3 %}
+    {% include 'elements/status_badges/partial.html.twig' with {'id': service.id} %}
+{% elseif service.currentStatus == 2 %}
+    {% include 'elements/status_badges/performance.html.twig' with {'id': service.id} %}
+{% elseif service.currentStatus == 1 %}
+    {% include 'elements/status_badges/operational.html.twig' with {'id': service.id} %}
+{% else %}
+    {% include 'elements/status_badges/unknown.html.twig' with {'id': service.id} %}
+{% endif %}

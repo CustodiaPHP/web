@@ -1,0 +1,9 @@
+{% if services.findAllByState(4) > 0 %}
+    {% include 'elements/overview/major.html.twig' %}
+{% elseif services.findAllByState(3) > 0  %}
+    {% include 'elements/overview/partial.html.twig' %}
+{% elseif services.findAllByState(2) > 0  %}
+    {% include 'elements/overview/performance.html.twig' %}
+{% else %}
+    {% include 'elements/overview/operational.html.twig' %}
+{% endif %}
