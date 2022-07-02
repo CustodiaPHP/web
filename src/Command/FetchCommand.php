@@ -109,7 +109,7 @@ class FetchCommand extends Command
                 }
             }
             $endTime = round(microtime(true) * 1000);
-            if(($endTime - $startTime)/1000 > 5.0){
+            if(($endTime - $startTime) > $this->getAverage($service)){
                 $log->setStatus(2);
             }else{
                 $log->setStatus(1);
@@ -119,7 +119,7 @@ class FetchCommand extends Command
             $log->setStatus(0);
         }
 
-        $log->setResponseTime($endTime-$startTime);
+        $log->setResponseTime($endTime - $startTime);
         $log->setTimestamp(new \DateTime());
         $service->setCurrentStatus($log->getStatus());
 
@@ -139,6 +139,16 @@ class FetchCommand extends Command
             }
             $this->manager->getManager()->flush();
         }
+    }
 
+    private function getAverage(Service $service){
+        $logs = $service->getServiceLogs();
+        $value = 0;
+
+        foreach ($logs as $log){
+            $value += $log->getResponseTime();
+        }
+
+        return $value / count($logs);
     }
 }

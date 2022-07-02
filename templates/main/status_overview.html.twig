@@ -1,9 +1,9 @@
 {% if services.findAllByState(4) > 0 %}
-    {% include 'elements/overview/major.html.twig' %}
+    {% include 'elements/overview/major.html.twig' with {'text': 'Some systems have major outages'} %}
 {% elseif services.findAllByState(3) > 0  %}
-    {% include 'elements/overview/partial.html.twig' %}
+    {% include 'elements/overview/partial.html.twig' with {'text': 'Some systems have partial outages'}  %}
 {% elseif services.findAllByState(2) > 0  %}
-    {% include 'elements/overview/performance.html.twig' %}
+    {% include 'elements/overview/performance.html.twig' with {'text': 'Some systems are having performance issues'} %}
 {% else %}
-    {% include 'elements/overview/operational.html.twig' %}
+    {% include 'elements/overview/operational.html.twig' with {'text': 'All systems are operational'} %}
 {% endif %}

@@ -43,6 +43,8 @@ class IncidentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
             ->orderBy('i.created', 'DESC')
+            ->where('i.created > :val')
+            ->setParameter('val', new \DateTime('-7 days'))
             ->setMaxResults($max)
             ->getQuery()
             ->getResult()

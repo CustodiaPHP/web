@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Service;
 use App\Repository\IncidentRepository;
 use App\Repository\ServiceGroupRepository;
 use App\Repository\ServiceRepository;
@@ -24,6 +25,17 @@ class MainController extends AbstractController
             ]),
             'services' => $serviceRepository,
             'incidents' => $incidents->findLastIncidents()
+        ]);
+    }
+
+    /**
+     * @Route("/{name}", name="app_service_view")
+     */
+    public function service(Service $service) : Response
+    {
+        return $this->render('service/index.html.twig', [
+            'service' => $service,
+            'logs' => $service->getServiceLogs()
         ]);
     }
 }
