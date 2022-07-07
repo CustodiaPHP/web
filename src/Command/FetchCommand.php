@@ -7,7 +7,6 @@ use App\Entity\ServiceLog;
 use App\Repository\ServiceLogRepository;
 use App\Repository\ServiceRepository;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -19,6 +18,8 @@ class FetchCommand extends Command
 {
     protected static $defaultName = 'app:fetch';
     protected static $defaultDescription = 'Command for fetching the status of the services';
+
+    private float $RESPONSE_MULTIPLIER = 1.5;
 
     private ManagerRegistry $manager;
     private ServiceRepository $serviceRepository;
@@ -67,9 +68,9 @@ class FetchCommand extends Command
 
         $startTime = round(microtime(true) * 1000);
         $sock = @fsockopen($host, $port, $error_code, $error, 15);
-
         if(!$sock){
             $endTime = round(microtime(true) * 1000);
+            $responseTime = $endTime - $startTime;
             if($service->getCurrentStatus() == 3){
                 $log->setStatus(4);
             }else{
@@ -79,15 +80,16 @@ class FetchCommand extends Command
 
         if($sock){
             $endTime = round(microtime(true) * 1000);
+            $responseTime = $endTime - $startTime;
             fclose($sock);
-            if(($endTime - $startTime)/1000 > 5.0){
+            if(($responseTime /1000 ) > ($this->getAverage($service) / 1000) * $this->RESPONSE_MULTIPLIER){
                 $log->setStatus(2);
             }else{
                 $log->setStatus(1);
             }
         }
 
-        $log->setResponseTime($endTime-$startTime);
+        $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
         $service->setCurrentStatus($log->getStatus());
 
@@ -109,17 +111,19 @@ class FetchCommand extends Command
                 }
             }
             $endTime = round(microtime(true) * 1000);
-            if(($endTime - $startTime) > $this->getAverage($service)){
+            $responseTime = $endTime - $startTime;
+            if(($responseTime / 1000) > ($this->getAverage($service) / 1000) * $this->RESPONSE_MULTIPLIER){
                 $log->setStatus(2);
             }else{
                 $log->setStatus(1);
             }
         } catch (GuzzleException $e) {
             $endTime = round(microtime(true) * 1000);
+            $responseTime = $endTime - $startTime;
             $log->setStatus(0);
         }
 
-        $log->setResponseTime($endTime - $startTime);
+        $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
         $service->setCurrentStatus($log->getStatus());
 
@@ -141,7 +145,7 @@ class FetchCommand extends Command
         }
     }
 
-    private function getAverage(Service $service){
+    private function getAverage(Service $service) : float {
         $logs = $service->getServiceLogs();
         $value = 0;
 
@@ -151,4 +155,5 @@ class FetchCommand extends Command
 
         return $value / count($logs);
     }
+
 }
