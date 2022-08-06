@@ -10,6 +10,11 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Kreait\Firebase\Contract\Messaging;
+use Kreait\Firebase\Exception\FirebaseException;
+use Kreait\Firebase\Exception\MessagingException;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,17 +24,29 @@ class FetchCommand extends Command
     protected static $defaultName = 'app:fetch';
     protected static $defaultDescription = 'Command for fetching the status of the services';
 
+    private array $STATUSES = [
+        0 => 'Unknown',
+        1 => 'Operational',
+        2 => 'Performance',
+        3 => 'Partial Outage',
+        4 => 'Major Outage'
+    ];
+
     private float $RESPONSE_MULTIPLIER = 1.5;
 
     private ManagerRegistry $manager;
+    private Messaging $firebase;
+
     private ServiceRepository $serviceRepository;
     private ServiceLogRepository $logRepository;
 
-    public function __construct(ServiceRepository $serviceRepository, ServiceLogRepository $logRepository, ManagerRegistry $manager, string $name = null)
+    public function __construct(ServiceRepository $serviceRepository, ServiceLogRepository $logRepository, ManagerRegistry $manager, Messaging $messaging, string $name = null)
     {
         parent::__construct($name);
 
         $this->manager = $manager;
+        $this->firebase = $messaging;
+
         $this->serviceRepository = $serviceRepository;
         $this->logRepository = $logRepository;
     }
@@ -44,11 +61,11 @@ class FetchCommand extends Command
         foreach ($services as $service){
             if($service->getType() == 0)
             {
-                $this->pingWebsite($client, $service);
+                $this->pingWebsite($client, $service, $output);
             }
             elseif ($service->getType() == 1)
             {
-                $this->pingServer($service);
+                $this->pingServer($service, $output);
             }
         }
 
@@ -58,7 +75,11 @@ class FetchCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function pingServer(Service $service){
+    /**
+     * @throws MessagingException
+     * @throws FirebaseException
+     */
+    private function pingServer(Service $service, OutputInterface $output){
         $log = new ServiceLog();
         $log->setService($service);
         $address = explode(':', $service->getAdress());
@@ -89,6 +110,8 @@ class FetchCommand extends Command
             }
         }
 
+        $this->notify($service, $log);
+
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
         $service->setCurrentStatus($log->getStatus());
@@ -96,7 +119,11 @@ class FetchCommand extends Command
         $this->manager->getManager()->persist($log);
     }
 
-    private function pingWebsite(Client $client, Service $service){
+    /**
+     * @throws MessagingException
+     * @throws FirebaseException
+     */
+    private function pingWebsite(Client $client, Service $service, OutputInterface $output){
         $log = new ServiceLog();
         $log->setService($service);
 
@@ -123,11 +150,33 @@ class FetchCommand extends Command
             $log->setStatus(0);
         }
 
+        $this->notify($service, $log);
+
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
         $service->setCurrentStatus($log->getStatus());
 
         $this->manager->getManager()->persist($log);
+    }
+
+    /**
+     * @throws MessagingException
+     * @throws FirebaseException
+     */
+    private function notify(Service $service, ServiceLog $log)
+    {
+        $message = CloudMessage::withTarget('topic', strtolower($service->getName()))
+            ->withNotification(Notification::create($service->getName().'status update',
+                $service->getName()." is ". $this->STATUSES[$log->getStatus()]));
+
+        $this->firebase->send($message);
+        /*
+        if($log->getStatus() >= 2){
+            $this->firebase->sendNotification($service->getName(), $this->STATUSES[$log->getStatus()]);
+        }else if($log->getStatus() == 1 && $service->getCurrentStatus() >= 2){
+            $this->firebase->sendNotification($service->getName(), $this->STATUSES[$log->getStatus()]);
+        }
+        */
     }
 
     private function clearOldLogs(){
