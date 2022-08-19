@@ -7,6 +7,7 @@ use App\Entity\ServiceLog;
 use App\Repository\ServiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,16 +19,36 @@ class APIController extends AbstractController
     /**
      * @Route("/status", name="api_status")
      */
-    public function status(ServiceRepository $serviceRepository): Response
+    public function status(ServiceRepository $serviceRepository, Request $request): Response
     {
+        if($request->headers->has("Accept") && $request->headers->get("Accept") == "application/json"){
+            $current_status = 1;
+            if($serviceRepository->findAllByState(4) > 0){
+                $current_status = 4;
+            }else if($serviceRepository->findAllByState(3) > 0){
+                $current_status = 3;
+            }else if($serviceRepository->findAllByState(2) > 0){
+                $current_status = 2;
+            }
+
+            return new JsonResponse([
+                'status' => $current_status
+            ]);
+        }
         return $this->render('main/status_overview.html.twig', ['services' => $serviceRepository]);
     }
 
     /**
      * @Route("/status/{id}", name="api_status_service")
      */
-    public function service_status(Service $service): Response
+    public function service_status(Service $service, Request $request): Response
     {
+        if($request->headers->has("Accept") && $request->headers->get("Accept") == "application/json"){
+            return new JsonResponse([
+                'service' => $service->getName(),
+                'status' => $service->getCurrentStatus()
+            ]);
+        }
         return $this->render('main/status_badge.html.twig', ['service' => $service]);
     }
 
