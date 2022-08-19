@@ -29,7 +29,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/{name}", name="app_service_view")
+     * @Route("/service/{name}", name="app_service_view")
      */
     public function service(Service $service) : Response
     {
