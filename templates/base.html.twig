@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html {% block htmltags %}{% endblock %}>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -13,6 +13,8 @@
             {{ encore_entry_script_tags('app') }}
             {{ encore_entry_script_tags('tailwind') }}
         {% endblock %}
+
+        {% block customscripts %}{% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
     </head>

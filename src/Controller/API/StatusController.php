@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\API;
 
 use App\Entity\Service;
 use App\Entity\ServiceLog;
@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/api")
+ * @Route("/api/status")
  */
-class APIController extends AbstractController
+class StatusController extends AbstractController
 {
     /**
-     * @Route("/status", name="api_status")
+     * @Route("/", name="api_status")
      */
     public function status(ServiceRepository $serviceRepository, Request $request): Response
     {
@@ -39,7 +39,7 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/status/{id}", name="api_status_service")
+     * @Route("/{id}", name="api_status_service")
      */
     public function service_status(Service $service, Request $request): Response
     {
@@ -53,35 +53,11 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/status/{id}/head", name="api_service_head")
+     * @Route("/{id}/head", name="api_service_head")
      */
     public function service_status_head(Service $service): Response
     {
         return $this->render('service/service_head_badge.html.twig', ['service' => $service]);
     }
 
-    /**
-     * @Route("/logs/{id}", name="api_service_logs")
-     */
-    public function service_logs(Service $service): Response
-    {
-        $filter = function (ServiceLog $log){
-            $interval = date_diff($log->getTimestamp(), new \DateTime());
-            return $interval->days < 1 and $interval->h <= 12;
-        };
-
-        $filteredLogs = $service->getServiceLogs()->filter($filter);
-        $logs = array();
-        foreach ($filteredLogs as $log)
-        {
-            $logs[$log->getTimestamp()->format('H:i')] = $log->getResponseTime()/1000;
-        }
-
-
-        $data = array(
-            "name" => $service->getName(),
-            "times" => $logs
-        );
-        return new JsonResponse($data);
-    }
 }

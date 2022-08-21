@@ -1,6 +1,8 @@
 module.exports = {
   content: [
       "./templates/**/*.html.twig",
+      "./templates/**/**/*.html.twig",
+      "./templates/**/**/**/*.html.twig",
       "./templates/bundles/**/**/*.html.twig"
   ],
   darkMode: 'media',
