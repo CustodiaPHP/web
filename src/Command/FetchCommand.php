@@ -32,13 +32,15 @@ class FetchCommand extends Command
         4 => 'Major Outage'
     ];
 
-    private float $RESPONSE_MULTIPLIER = 1.5;
+    private float $RESPONSE_MULTIPLIER = 1.75;
 
     private ManagerRegistry $manager;
     private Messaging $firebase;
 
     private ServiceRepository $serviceRepository;
     private ServiceLogRepository $logRepository;
+
+    private string $notificationTag = "isancozocktonline";
 
     public function __construct(ServiceRepository $serviceRepository, ServiceLogRepository $logRepository, ManagerRegistry $manager, Messaging $messaging, string $name = null)
     {
@@ -51,6 +53,10 @@ class FetchCommand extends Command
         $this->logRepository = $logRepository;
     }
 
+    /**
+     * @throws MessagingException
+     * @throws FirebaseException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $client = new Client([
@@ -75,14 +81,10 @@ class FetchCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @throws MessagingException
-     * @throws FirebaseException
-     */
     private function pingServer(Service $service, OutputInterface $output){
         $log = new ServiceLog();
         $log->setService($service);
-        $address = explode(':', $service->getAdress());
+        $address = explode(':', $service->getAddress());
 
         $host = $address[0];
         $port = $address[1] ?? 80;
@@ -110,7 +112,7 @@ class FetchCommand extends Command
             }
         }
 
-        $this->notify($service, $log);
+        $this->notify($service, $log, $output);
 
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
@@ -119,17 +121,13 @@ class FetchCommand extends Command
         $this->manager->getManager()->persist($log);
     }
 
-    /**
-     * @throws MessagingException
-     * @throws FirebaseException
-     */
     private function pingWebsite(Client $client, Service $service, OutputInterface $output){
         $log = new ServiceLog();
         $log->setService($service);
 
         $startTime = round(microtime(true) * 1000);
         try {
-            $response = $client->get($service->getAdress());
+            $response = $client->get($service->getAddress());
             if($response->getStatusCode() != 200){
                 if($service->getCurrentStatus() == 3){
                     $log->setStatus(4);
@@ -150,7 +148,7 @@ class FetchCommand extends Command
             $log->setStatus(0);
         }
 
-        $this->notify($service, $log);
+        $this->notify($service, $log, $output);
 
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
@@ -159,24 +157,17 @@ class FetchCommand extends Command
         $this->manager->getManager()->persist($log);
     }
 
-    /**
-     * @throws MessagingException
-     * @throws FirebaseException
-     */
-    private function notify(Service $service, ServiceLog $log)
+    private function notify(Service $service, ServiceLog $log, OutputInterface $output)
     {
-        $message = CloudMessage::withTarget('topic', strtolower($service->getName()))
-            ->withNotification(Notification::create($service->getName().'status update',
-                $service->getName()." is ". $this->STATUSES[$log->getStatus()]));
+        $message = CloudMessage::withTarget('topic', strtolower($this->notificationTag))
+            ->withNotification(Notification::create($service->getName().' status changed',
+                $service->getName()." status change to ". $this->STATUSES[$log->getStatus()]));
 
-        $this->firebase->send($message);
-        /*
-        if($log->getStatus() >= 2){
-            $this->firebase->sendNotification($service->getName(), $this->STATUSES[$log->getStatus()]);
-        }else if($log->getStatus() == 1 && $service->getCurrentStatus() >= 2){
-            $this->firebase->sendNotification($service->getName(), $this->STATUSES[$log->getStatus()]);
+        try {
+            $this->firebase->send($message);
+        } catch (MessagingException | FirebaseException $e) {
+            $output->write($e->getMessage());
         }
-        */
     }
 
     private function clearOldLogs(){
