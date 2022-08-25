@@ -5,7 +5,7 @@ module.exports = {
       "./templates/**/**/**/*.html.twig",
       "./templates/bundles/**/**/*.html.twig"
   ],
-  darkMode: 'media',
+  darkMode: 'class',
   theme: {
     extend: {},
   },
