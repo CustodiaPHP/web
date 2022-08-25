@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html {% block htmltags %}{% endblock %}>
+<html x-bind:class="dark ? 'dark' : ''" x-data="data()" {% block htmltags %}{% endblock %} lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -16,7 +18,11 @@
 
         {% block customscripts %}{% endblock %}
 
-        <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('icons/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('icons/favicon-16x16.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('icons/favicon.ico') }}">
+        <link rel="manifest" href="{{ asset('icons/site.webmanifest') }}">
     </head>
     <body>
         {% block body %}{% endblock %}
