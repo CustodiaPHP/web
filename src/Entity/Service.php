@@ -216,4 +216,15 @@ class Service
 
         return $this;
     }
+
+    public function getAverage() : float {
+        $logs = $this->getServiceLogs();
+        $value = 0;
+
+        foreach ($logs as $log){
+            $value += $log->getResponseTime();
+        }
+
+        return round($value / count($logs), 2);
+    }
 }
