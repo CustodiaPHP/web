@@ -26,10 +26,10 @@ class FetchCommand extends Command
 
     private array $STATUSES = [
         0 => 'Unknown',
-        1 => 'Operational',
-        2 => 'Performance',
-        3 => 'Partial Outage',
-        4 => 'Major Outage'
+        1 => '%s is Operational again',
+        2 => '%s is currently having perfomance issues',
+        3 => '%s is currently having a minor outage',
+        4 => '%s is currently having a major outage'
     ];
 
     private float $RESPONSE_MULTIPLIER = 1.75;
@@ -112,7 +112,10 @@ class FetchCommand extends Command
             }
         }
 
-        $this->notify($service, $log, $output);
+        if($log->getStatus() != $service->getCurrentStatus())
+        {
+            $this->notify($service, $log, $output);
+        }
 
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
@@ -148,7 +151,10 @@ class FetchCommand extends Command
             $log->setStatus(0);
         }
 
-        $this->notify($service, $log, $output);
+        if($log->getStatus() != $service->getCurrentStatus())
+        {
+            $this->notify($service, $log, $output);
+        }
 
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
@@ -161,7 +167,7 @@ class FetchCommand extends Command
     {
         $message = CloudMessage::withTarget('topic', strtolower($this->notificationTag))
             ->withNotification(Notification::create($service->getName().' status changed',
-                $service->getName()." status change to ". $this->STATUSES[$log->getStatus()]));
+                sprintf($this->STATUSES[$log->getStatus()], $service->getName())));
 
         try {
             $this->firebase->send($message);
