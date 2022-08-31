@@ -95,6 +95,9 @@
     "knplabs/knp-time-bundle": {
         "version": "v1.19.0"
     },
+    "kreait/firebase-bundle": {
+        "version": "4.1.0"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
