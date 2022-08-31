@@ -20,7 +20,7 @@
         </div>
     </div>
     {% for group in groups %}
-        {% if group.publicServices | length > 0 %}
+        {% if group.publicServices | length > 0 or is_granted('ROLE_USER') and group.services | length > 0 %}
             <div class="py-5">
                 <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
                     <div class="overflow-hidden shadow-md bg-gray-100 dark:bg-gray-900 rounded-xl">
@@ -28,7 +28,7 @@
                             {{ group.name }}
                         </div>
 
-                        {% for service in group.publicServices %}
+                        {% for service in (is_granted('ROLE_USER') ? group.services : group.publicServices) %}
                             <div class="p-6 border-0 border-t-2 border-gray-200 dark:border-gray-800">
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-5">

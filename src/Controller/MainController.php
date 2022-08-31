@@ -33,6 +33,9 @@ class MainController extends AbstractController
      */
     public function service(Service $service) : Response
     {
+        if(!$service->isPublic() && !$this->isGranted('ROLE_USER')){
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('service/index.html.twig', [
             'service' => $service,
             'logs' => $service->getServiceLogs()

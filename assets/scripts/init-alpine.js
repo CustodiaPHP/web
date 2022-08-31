@@ -19,6 +19,17 @@ window.data = function () {
         toggleTheme() {
             this.dark = !this.dark
             setThemeToLocalStorage(this.dark)
-        }
+        },
+        isSideMenuOpen: false,
+        toggleSideMenu() {
+            this.isSideMenuOpen = !this.isSideMenuOpen
+        },
+        closeSideMenu() {
+            this.isSideMenuOpen = false
+        },
+        isServicesMenuOpen: false,
+        toggleServicesMenu() {
+            this.isServicesMenuOpen = !this.isServicesMenuOpen
+        },
     }
 }
