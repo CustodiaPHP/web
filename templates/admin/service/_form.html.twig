@@ -1,4 +1,40 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <label class="block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Name</span>
+        {{ form_widget(form.name) }}
+    </label>
+    <label class="block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Service URL</span>
+        {{ form_widget(form.url) }}
+    </label>
+
+    <label class="block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Service Address</span>
+        {{ form_widget(form.address) }}
+    </label>
+
+    <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Service Type
+        </span>
+        {{ form_widget(form.type) }}
+    </label>
+
+    <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Service Group
+        </span>
+        {{ form_widget(form.serviceGroup) }}
+    </label>
+
+    <div class="flex mt-6 text-sm">
+        <label class="flex items-center dark:text-gray-400">
+            {{ form_widget(form.public) }}
+            <span class="ml-2">Should this service be public</span>
+        </label>
+    </div>
+
+    <div class="mt-6">
+        <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">{{ button_label | default('Save') }}</button>
+    </div>
 {{ form_end(form) }}
