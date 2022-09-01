@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Service;
 use App\Form\ServiceType;
+use App\Repository\ServiceGroupRepository;
 use App\Repository\ServiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,19 +48,9 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_admin_service_show", methods={"GET"})
-     */
-    public function show(Service $service): Response
-    {
-        return $this->render('admin/service/show.html.twig', [
-            'service' => $service,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="app_admin_service_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Service $service, ServiceRepository $serviceRepository): Response
+    public function edit(Request $request, Service $service, ServiceRepository $serviceRepository, ServiceGroupRepository $groupRepository): Response
     {
         $form = $this->createForm(ServiceType::class, $service);
         $form->handleRequest($request);
@@ -73,6 +64,7 @@ class ServiceController extends AbstractController
         return $this->renderForm('admin/service/edit.html.twig', [
             'service' => $service,
             'form' => $form,
+            'groups' => $groupRepository->findAll(),
         ]);
     }
 

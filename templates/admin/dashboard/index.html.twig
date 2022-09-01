@@ -122,7 +122,7 @@
                                 {% endif %}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ service.serviceLogs.get(service.serviceLogs.count).timestamp | date }}
+                                {{ service.serviceLogs.get(service.serviceLogs.count - 1).timestamp | date }}
                             </td>
                         </tr>
                     {% endfor %}

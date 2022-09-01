@@ -8,7 +8,7 @@
         {% include 'admin/elements/mobile-sidenav.html.twig' %}
         <div class="flex flex-col flex-1 w-full">
             {% include 'admin/elements/header.html.twig' %}
-            <main class="h-full overflow-y-auto">
+            <main class="h-full overflow-y-auto" {% block maindata %}{% endblock %}>
                 {% block content %}
                 {% endblock %}
             </main>
