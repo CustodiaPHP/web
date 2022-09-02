@@ -25,7 +25,7 @@ class FetchCommand extends Command
     protected static $defaultDescription = 'Command for fetching the status of the services';
 
     private array $STATUSES = [
-        0 => 'Unknown',
+        0 => '%s is currently not reachable',
         1 => '%s is Operational again',
         2 => '%s is currently having perfomance issues',
         3 => '%s is currently having a minor outage',
@@ -112,16 +112,11 @@ class FetchCommand extends Command
             }
         }
 
-        if($log->getStatus() != $service->getCurrentStatus())
-        {
-            $this->notify($service, $log, $output);
-        }
-
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
-        $service->setCurrentStatus($log->getStatus());
-
         $this->manager->getManager()->persist($log);
+
+        $this->updateStatus($service, $log, $output);
     }
 
     private function pingWebsite(Client $client, Service $service, OutputInterface $output){
@@ -151,20 +146,36 @@ class FetchCommand extends Command
             $log->setStatus(0);
         }
 
-        if($log->getStatus() != $service->getCurrentStatus())
-        {
-            $this->notify($service, $log, $output);
-        }
-
         $log->setResponseTime($responseTime);
         $log->setTimestamp(new \DateTime());
-        $service->setCurrentStatus($log->getStatus());
-
         $this->manager->getManager()->persist($log);
+
+        $this->updateStatus($service, $log, $output);
+    }
+
+    private function updateStatus(Service $service, ServiceLog $latestLog, OutputInterface $output)
+    {
+        if($latestLog->getStatus() > 1)
+        {
+          if($service->getServiceLogs()->last()->getStatus() == $latestLog->getStatus() || $latestLog->getStatus() == 4)
+          {
+            $this->notify($service, $latestLog, $output);
+            $service->setCurrentStatus($latestLog->getStatus());
+          }
+        }
+        else
+        {
+          $this->notify($service, $latestLog, $output);
+          $service->setCurrentStatus($latestLog->getStatus());
+        }
     }
 
     private function notify(Service $service, ServiceLog $log, OutputInterface $output)
     {
+        if($service->getCurrentStatus() == $log->getStatus()){
+          return;
+        }
+
         $message = CloudMessage::withTarget('topic', strtolower($this->notificationTag))
             ->withNotification(Notification::create($service->getName().' status changed',
                 sprintf($this->STATUSES[$log->getStatus()], $service->getName())));
