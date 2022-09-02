@@ -43,6 +43,7 @@ class ServiceType extends AbstractType
             ])
             ->add('public', CheckboxType::class, [
                 'label' => false,
+                'required' => false,
                 'attr' => [
                     'class' => 'text-blue-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray'
                 ]
