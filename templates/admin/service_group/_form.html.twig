@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<label class="block text-sm">
+    <span class="text-gray-700 dark:text-gray-400">Name</span>
+    {{ form_widget(form.name) }}
+</label>
+
+<div class="flex mt-6 text-sm">
+    <label class="flex items-center dark:text-gray-400">
+        {{ form_widget(form.public) }}
+        <span class="ml-2">Should this service be public</span>
+    </label>
+</div>
+
+<div class="mt-6">
+    <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">{{ button_label | default('Save') }}</button>
+</div>
+{{ form_end(form) }}

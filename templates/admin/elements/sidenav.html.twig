@@ -25,7 +25,7 @@
         </ul>
         <ul>
             <li class="relative px-6 py-3">
-                {% if app.request.pathInfo starts with path('app_admin_service_index') %}
+                {% if app.request.pathInfo starts with path('app_admin_service_index') or app.request.pathInfo starts with path('app_admin_service_group_index') %}
                 <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                       aria-hidden="true"></span>
                 {% endif %}
@@ -56,12 +56,12 @@
                         x-transition:leave-end="opacity-0 max-h-0"
                         class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                         aria-label="submenu">
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="#">
+                        <li class="px-2 py-1 transition-colors duration-150 {% if app.request.pathInfo starts with path('app_admin_service_group_index') %}text-gray-800 hover:text-gray-500 dark:text-gray-200 hover:dark:text-gray-400{% else %}hover:text-gray-800 dark:hover:text-gray-200{% endif %}">
+                            <a class="w-full" href="{{ path('app_admin_service_group_index') }}">
                                 Groups
                             </a>
                         </li>
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                        <li class="px-2 py-1 transition-colors duration-150 {% if app.request.pathInfo starts with path('app_admin_service_index') %}text-gray-800 hover:text-gray-500 dark:text-gray-200 hover:dark:text-gray-400{% else %}hover:text-gray-800 dark:hover:text-gray-200{% endif %}">
                             <a class="w-full" href="{{ path('app_admin_service_index') }}">
                                 Services
                             </a>

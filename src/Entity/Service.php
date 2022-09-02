@@ -114,7 +114,7 @@ class Service
 
     public function isPublic(): ?bool
     {
-        return $this->public;
+        return $this->public && $this->getServiceGroup()->isPublic();
     }
 
     public function setPublic(bool $public): self

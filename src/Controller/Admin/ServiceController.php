@@ -36,6 +36,7 @@ class ServiceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $service->setCurrentStatus(0);
             $serviceRepository->add($service, true);
 
             return $this->redirectToRoute('app_admin_service_index', [], Response::HTTP_SEE_OTHER);
