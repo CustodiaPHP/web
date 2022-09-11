@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LogController extends AbstractController
 {
     /**
-     * @Route("/logs/{id}", name="api_service_logs")
+     * @Route("/{id}", name="api_service_logs")
      */
     public function search_by_service(Service $service): Response
     {

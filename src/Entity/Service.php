@@ -227,4 +227,9 @@ class Service
 
         return round($value / count($logs), 2);
     }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }
