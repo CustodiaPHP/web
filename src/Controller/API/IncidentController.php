@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class IncidentController extends AbstractController
 {
 
-    #[Route('/list', name: 'api_incident_list')]
+    /**
+     * @Route("/list", name="api_incident_list")
+     */
     public function list(IncidentRepository $incidentRepository): Response
     {
         $incidents = $incidentRepository->findLastIncidents(5);
