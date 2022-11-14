@@ -1,43 +1,29 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | Incidents{% endblock %}
-
-{% block maindata %}x-data="{ {% for incident in incidents %}'delete{{ incident.id }}': false,{% endfor %} }"{% endblock %}
+{% block title %}Admin | Settings{% endblock %}
 
 {% block content %}
-<div class="container px-6 mx-auto grid">
-    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Services
-    </h2>
-    <h1>Setting index</h1>
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Settings
+        </h2>
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Page Name</span>
+                <input name="page_name" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'general'}).value['page_name'] }}">
+            </label>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Value</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for setting in settings %}
-            <tr>
-                <td>{{ setting.id }}</td>
-                <td>{{ setting.name }}</td>
-                <td>{{ setting.value }}</td>
-                <td>
-                    <a href="{{ path('app_admin_setting_show', {'id': setting.id}) }}">show</a>
-                    <a href="{{ path('app_admin_setting_edit', {'id': setting.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Dark Mode
+                </span>
+                <select name="dark_mode" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                    <option value="0" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 0 %}selected{% endif %}>Switchable</option>
+                    <option value="1" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 1 %}selected{% endif %}>Force disable</option>
+                    <option value="2" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 2 %}selected{% endif %}>Force enable</option>
+                </select>
+            </label>
 
-    <a href="{{ path('app_admin_setting_new') }}">Create new</a>
+        </div>
+    </div>
 {% endblock %}

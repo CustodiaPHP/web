@@ -41,7 +41,7 @@ class Setting
    		return unserialize($this->value);
    	}
 
-	public function setValue(object $value): self
+	public function setValue(mixed $value): self
    	{
    		$this->value = serialize($value);
    		return $this;
