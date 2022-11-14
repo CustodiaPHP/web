@@ -1,8 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Setting index{% endblock %}
+{% block title %}Admin | Incidents{% endblock %}
 
-{% block body %}
+{% block maindata %}x-data="{ {% for incident in incidents %}'delete{{ incident.id }}': false,{% endfor %} }"{% endblock %}
+
+{% block content %}
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Services
+    </h2>
     <h1>Setting index</h1>
 
     <table class="table">
