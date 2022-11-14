@@ -27,7 +27,7 @@ class FetchCommand extends Command
     private array $STATUSES = [
         0 => '%s is currently not reachable',
         1 => '%s is Operational again',
-        2 => '%s is currently having perfomance issues',
+        2 => '%s is currently having performance issues',
         3 => '%s is currently having a minor outage',
         4 => '%s is currently having a major outage'
     ];
