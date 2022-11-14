@@ -9,14 +9,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/logs")
- */
+#[Route('/api/logs')]
 class LogController extends AbstractController
 {
-    /**
-     * @Route("/{id}", name="api_service_logs")
-     */
+	#[Route('/{id}', name: 'api_service_logs')]
     public function search_by_service(Service $service): Response
     {
         $filter = function (ServiceLog $log){

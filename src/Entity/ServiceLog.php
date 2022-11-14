@@ -3,39 +3,28 @@
 namespace App\Entity;
 
 use App\Repository\ServiceLogRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ServiceLogRepository::class)
- */
+#[ORM\Entity(repositoryClass: ServiceLogRepository::class)]
 class ServiceLog
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type: Types::INTEGER)]
+	private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="serviceLogs")
-     * @ORM\JoinColumn(nullable=false)
-     */
+	#[ORM\ManyToOne(targetEntity: Service::class, inversedBy: 'serviceLogs')]
+	#[ORM\JoinColumn(nullable: false)]
     private $service;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+	#[ORM\Column(type: Types::INTEGER)]
     private $status;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+	#[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private $timestamp;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+	#[ORM\Column(type: Types::FLOAT)]
     private $responseTime;
 
     public function getId(): ?int

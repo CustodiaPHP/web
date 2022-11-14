@@ -11,14 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/status")
- */
+#[Route('/api/status')]
 class StatusController extends AbstractController
 {
-    /**
-     * @Route("/", name="api_status")
-     */
+	#[Route('/', name: 'api_status')]
     public function status(ServiceRepository $serviceRepository, Request $request): Response
     {
         if($request->headers->has("Accept") && $request->headers->get("Accept") == "application/json"){
@@ -38,9 +34,7 @@ class StatusController extends AbstractController
         return $this->render('main/status_overview.html.twig', ['services' => $serviceRepository]);
     }
 
-    /**
-     * @Route("/{id}", name="api_status_service")
-     */
+	#[Route('/{id}', name: 'api_status_service')]
     public function service_status(Service $service, Request $request): Response
     {
         if($request->headers->has("Accept") && $request->headers->get("Accept") == "application/json"){
@@ -52,9 +46,7 @@ class StatusController extends AbstractController
         return $this->render('main/status_badge.html.twig', ['service' => $service]);
     }
 
-    /**
-     * @Route("/{id}/head", name="api_service_head")
-     */
+	#[Route('/{id}/head', name: 'api_service_head')]
     public function service_status_head(Service $service): Response
     {
         return $this->render('service/service_head_badge.html.twig', ['service' => $service]);

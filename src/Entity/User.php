@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,26 +13,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type: Types::INTEGER)]
+	private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+	#[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private $username;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+	#[ORM\Column(type: Types::JSON)]
     private $roles = [];
 
-    /**
-     * @ORM\Column(type="string")
-     */
+	#[ORM\Column(type: Types::STRING)]
     private $password;
 
     public function getId(): ?int

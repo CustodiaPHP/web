@@ -11,14 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin/service")
- */
+#[Route('/admin/service')]
 class ServiceController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_admin_service_index", methods={"GET"})
-     */
+	#[Route('/', name: 'app_admin_service_index', methods: ['GET'])]
     public function index(ServiceRepository $serviceRepository): Response
     {
         return $this->render('admin/service/index.html.twig', [
@@ -26,9 +22,7 @@ class ServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="app_admin_service_new", methods={"GET", "POST"})
-     */
+	#[Route('/new', name: 'app_admin_service_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ServiceRepository $serviceRepository): Response
     {
         $service = new Service();
@@ -48,9 +42,7 @@ class ServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_admin_service_edit", methods={"GET", "POST"})
-     */
+	#[Route('/{id}/edit', name: 'app_admin_service_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Service $service, ServiceRepository $serviceRepository, ServiceGroupRepository $groupRepository): Response
     {
         $form = $this->createForm(ServiceType::class, $service);
@@ -69,9 +61,7 @@ class ServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="app_admin_service_delete", methods={"POST"})
-     */
+	#[Route('/{id}', name: 'app_admin_service_delete', methods: ['POST'])]
     public function delete(Request $request, Service $service, ServiceRepository $serviceRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {

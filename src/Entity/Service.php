@@ -5,64 +5,43 @@ namespace App\Entity;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ServiceRepository::class)
- */
+#[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type: Types::INTEGER)]
+	private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+	#[ORM\Column(type: Types::STRING, length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+	#[ORM\Column(type: Types::INTEGER)]
     private $type;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+	#[ORM\Column(type: Types::STRING, length: 255)]
     private $address;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+	#[ORM\Column(type: Types::BOOLEAN)]
     private $public;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+	#[ORM\Column(type: Types::INTEGER)]
     private $currentStatus;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ServiceGroup::class, inversedBy="services")
-     * @ORM\JoinColumn(nullable=false)
-     */
+	#[ORM\ManyToOne(targetEntity: ServiceGroup::class, inversedBy: 'services')]
+	#[ORM\JoinColumn(nullable: false)]
     private $serviceGroup;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+	#[ORM\Column(type: Types::STRING, length: 255)]
     private $url;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ServiceLog::class, mappedBy="service", orphanRemoval=true)
-     */
+	#[ORM\OneToMany(targetEntity: ServiceLog::class, mappedBy: 'service', orphanRemoval: true)]
     private $serviceLogs;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Incident::class, mappedBy="affected")
-     */
+	#[ORM\ManyToMany(targetEntity: Incident::class, inversedBy: 'affected')]
     private $incidents;
 
     public function __construct()

@@ -5,43 +5,30 @@ namespace App\Entity;
 use App\Repository\IncidentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=IncidentRepository::class)
- */
+#[ORM\Entity(repositoryClass: IncidentRepository::class)]
 class Incident
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type: Types::INTEGER)]
+	private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+	#[ORM\Column(type: Types::STRING, length: 255)]
     private $title;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+	#[ORM\Column(type: Types::STRING, length: 255)]
     private $message;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+	#[ORM\Column(type: Types::INTEGER)]
     private $status;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+	#[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private $created;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="incidents")
-     */
+	#[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'incidents')]
     private $affected;
 
     public function __construct()

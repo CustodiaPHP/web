@@ -10,15 +10,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/incident")
- */
+#[Route('/api/incident')]
 class IncidentController extends AbstractController
 {
 
-    /**
-     * @Route("/list", name="api_incident_list")
-     */
+	#[Route('/list', name: 'api_incident_list')]
     public function list(IncidentRepository $incidentRepository): Response
     {
         $incidents = $incidentRepository->findLastIncidents(5);
