@@ -10,15 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin")
- */
+#[Route('/admin')]
 class DashboardController extends AbstractController
 {
-    /**
-     * @Route("/")
-     * @Route("/dashboard", name="app_admin_dashboard")
-     */
+	#[Route('/')]
+	#[Route('/dashboard', name: 'app_admin_dashboard')]
     public function index(ServiceRepository $serviceRepository, ServiceLogRepository $logRepository,
                           UserRepository $userRepository, IncidentRepository $incidentRepository): Response
     {

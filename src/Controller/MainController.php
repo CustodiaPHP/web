@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_welcome")
-     */
+	#[Route('/', name: 'app_welcome')]
     public function index(ServiceGroupRepository $repository,
                           ServiceRepository $serviceRepository,
                           IncidentRepository $incidents): Response
@@ -28,9 +26,7 @@ class MainController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/service/{name}", name="app_service_view")
-     */
+	#[Route('/service/{name}', name: 'app_service_view')]
     public function service(Service $service) : Response
     {
         if(!$service->isPublic() && !$this->isGranted('ROLE_USER')){
