@@ -2,20 +2,46 @@
 
 namespace App\Command;
 
+use App\Entity\Setting;
+use App\Repository\SettingRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'generate-settings',
-    description: 'Add a short description for your command',
+    name: 'app:generate-settings',
+    description: 'Generate default settings for general usage',
 )]
 class GenerateSettingsCommand extends Command
 {
+
+    private SettingRepository $settingRepository;
+    private ManagerRegistry $managerRegistry;
+
+    const DEFAULT_SETTINGS = [
+        'general' => [
+            'page_name' => 'CustodiaPHP',
+            'dark_mode' => 0,
+        ],
+        'footer' => [
+            'privacy_link' => false,
+            'imprint_link' => false,
+            'dashboard_link' => true
+        ]
+    ];
+
+    public function __construct(SettingRepository $settingRepository, ManagerRegistry $manager, string $name = null)
+    {
+        parent::__construct($name);
+
+        $this->settingRepository = $settingRepository;
+        $this->managerRegistry = $manager;
+    }
+
     protected function configure(): void
     {
         $this
@@ -26,17 +52,27 @@ class GenerateSettingsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        foreach (self::DEFAULT_SETTINGS as $settingKey => $settingValue)
+        {
+            if($this->settingRepository->findOneBy(['name' => $settingKey]) === null)
+            {
+                $setting = new Setting();
+
+                $setting->setName($settingKey);
+                $setting->setValue($settingValue);
+
+                $this->managerRegistry->getManager()->persist($setting);
+            }
+            else if ($input->getOption('force'))
+            {
+                $setting = $this->settingRepository->findOneBy(['name' => $settingKey]);
+                $setting->setValue($settingValue);
+            }
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $this->managerRegistry->getManager()->flush();
+        $io->success('Generated all needed settings entries');
 
         return Command::SUCCESS;
     }
