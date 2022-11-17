@@ -1,29 +1,28 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | Settings{% endblock %}
+{% block title %}Admin | {% trans %}Settings{% endtrans %}{% endblock %}
 
 {% block content %}
     <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Settings
+            {% trans %}Settings{% endtrans %}
         </h2>
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Page Name</span>
-                <input name="page_name" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'general'}).value['page_name'] }}">
+                <span class="text-gray-700 dark:text-gray-400">{% trans %}Page Name{% endtrans %}</span>
+                <input name="general[page_name]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'general'}).value['page_name'] }}">
             </label>
 
             <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
-                  Dark Mode
+                  {% trans %}Dark Mode{% endtrans %}
                 </span>
-                <select name="dark_mode" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                    <option value="0" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 0 %}selected{% endif %}>Switchable</option>
-                    <option value="1" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 1 %}selected{% endif %}>Force disable</option>
-                    <option value="2" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 2 %}selected{% endif %}>Force enable</option>
+                <select name="general[dark_mode]" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                    <option value="0" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 0 %}selected{% endif %}>{% trans %}Switchable{% endtrans %}</option>
+                    <option value="1" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 1 %}selected{% endif %}>{% trans %}Force disable{% endtrans %}</option>
+                    <option value="2" {% if settings.findOneBy({'name': 'general'}).value['dark_mode'] == 2 %}selected{% endif %}>{% trans %}Force enable{% endtrans %}</option>
                 </select>
             </label>
-
         </div>
     </div>
 {% endblock %}

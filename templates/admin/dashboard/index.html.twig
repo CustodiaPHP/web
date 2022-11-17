@@ -1,11 +1,11 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}Admin | {% trans %}Dashboard{% endtrans %}{% endblock %}
 
 {% block content %}
 <div class="container px-6 mx-auto grid">
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Dashboard
+        {% trans %}Dashboard{% endtrans %}
     </h2>
     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         <!-- Card -->
@@ -17,7 +17,7 @@
             </div>
             <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Total services
+                    {% trans %}Total services{% endtrans %}
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                     {{ services | length | number_format(0, ',', '.')  }}
@@ -33,7 +33,7 @@
             </div>
             <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Total logs
+                    {% trans %}Total logs{% endtrans %}
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                     {{ logs | number_format(0, ',', '.')  }}
@@ -49,7 +49,7 @@
             </div>
             <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Total Incidents
+                    {% trans %}Total Incidents{% endtrans %}
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                     {{ incidents | number_format(0, ',', '.') }}
@@ -65,7 +65,7 @@
             </div>
             <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Total users
+                    {% trans %}Total users{% endtrans %}
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                     {{ users | number_format(0, ',', '.')}}
@@ -80,10 +80,10 @@
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Service</th>
-                        <th class="px-4 py-3">Response Time</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3">Last Update</th>
+                        <th class="px-4 py-3">{% trans %}Service{% endtrans %}</th>
+                        <th class="px-4 py-3">{% trans %}Response Time{% endtrans %}</th>
+                        <th class="px-4 py-3">{% trans %}Status{% endtrans %}</th>
+                        <th class="px-4 py-3">{% trans %}Last Update{% endtrans %}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -105,19 +105,19 @@
                             <td class="px-4 py-3 text-xs">
                                 {% if service.currentStatus == 1 %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-green-500 bg-green-100 rounded-full dark:bg-green-500 dark:text-green-100">
-                                      Online
+                                      {% trans %}Online{% endtrans %}
                                     </span>
                                 {% elseif service.currentStatus == 2 %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-blue-500 bg-blue-100 rounded-full dark:bg-blue-500 dark:text-blue-100">
-                                      Performance Issues
+                                      {% trans %}Performance Issues{% endtrans %}
                                     </span>
                                 {% elseif service.currentStatus == 3 %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-orange-500 bg-orange-100 rounded-full dark:bg-orange-500 dark:text-orange-100">
-                                      Minor Outage
+                                      {% trans %}Minor Outage{% endtrans %}
                                     </span>
                                 {% elseif service.currentStatus == 4 %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-red-500 bg-red-100 rounded-full dark:bg-red-500 dark:text-red-100">
-                                      Minor Outage
+                                      {% trans %}Minor Outage{% endtrans %}
                                     </span>
                                 {% endif %}
                             </td>

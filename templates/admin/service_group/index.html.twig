@@ -1,13 +1,13 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | Service Groups{% endblock %}
+{% block title %}Admin | {% trans %}Service Groups{% endtrans %}{% endblock %}
 
 {% block maindata %}x-data="{ {% for service_group in service_groups %}'delete{{ service_group.id }}': false,{% endfor %} }"{% endblock %}
 
 {% block content %}
     <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Service Groups
+            {% trans %}Service Groups{% endtrans %}
         </h2>
 
         <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-blue-100 bg-blue-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -16,7 +16,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-                <span>Register a new service group</span>
+                <span>{% trans %}Register a new service group{% endtrans %}</span>
             </div>
         </a>
 
@@ -26,10 +26,10 @@
                 <table class="w-full whitespace-no-wrap">
                     <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">ID</th>
-                        <th class="px-4 py-3">Name</th>
-                        <th class="px-4 py-3">Type</th>
-                        <th class="px-4 py-3">Actions</th>
+                        <th class="px-4 py-3">{% trans %}ID{% endtrans %}</th>
+                        <th class="px-4 py-3">{% trans %}Name{% endtrans %}</th>
+                        <th class="px-4 py-3">{% trans %}Type{% endtrans %}</th>
+                        <th class="px-4 py-3">{% trans %}Actions{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -50,11 +50,11 @@
                             <td class="px-4 py-3 text-xs">
                                 {% if service_group.public %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-green-500 bg-green-100 rounded-full dark:bg-green-500 dark:text-green-100">
-                                      Public
+                                      {% trans %}Public{% endtrans %}
                                     </span>
                                 {% else %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-orange-500 bg-orange-100 rounded-full dark:bg-orange-500 dark:text-orange-100">
-                                      Internal
+                                      {% trans %}Internal{% endtrans %}
                                     </span>
                                 {% endif %}
                             </td>

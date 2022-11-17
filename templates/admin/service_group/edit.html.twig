@@ -1,11 +1,11 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | Service Groups{% endblock %}
+{% block title %}Admin | {% trans %}Service Groups{% endtrans %}{% endblock %}
 
 {% block content %}
     <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Update {{ service_group.name }}
+            {% trans with {'%name%': service_group.name} %}Update %name%{% endtrans %}
         </h2>
 
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
