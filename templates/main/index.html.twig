@@ -40,7 +40,7 @@
     <div class="py-5">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
            <div class="border-0 border-t-2 border-gray-200 dark:border-gray-400">
-               <h1 class="py-2 text-4xl">Past Incidents </h1>
+               <h1 class="py-2 text-4xl">{% trans %}Past Incidents{% endtrans %}</h1>
                <div class="border-l-2 mt-10">
                    {% for incident in incidents %}
                        {% include 'main/incident.html.twig' with {'incident': incident} %}

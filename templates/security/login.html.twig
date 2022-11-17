@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Status Page - Login{% endblock %}
+{% block title %} | {% trans %}SignIn{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="min-h-screen bg-gray-100 dark:bg-gray-700 flex flex-col justify-center sm:py-12">
@@ -8,19 +8,19 @@
             {% if error %}
                 <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
-            <h1 class="font-bold text-center text-2xl mb-5 dark:text-gray-400">Login</h1>
+            <h1 class="font-bold text-center text-2xl mb-5 dark:text-gray-400">{% trans %}SignIn{% endtrans %}</h1>
             <div class="bg-white dark:bg-gray-900 shadow w-full rounded-lg divide-y divide-gray-200 dark:divide-gray-800">
                 <form method="post" class="px-5 py-7">
-                    <label class="font-semibold text-sm text-gray-600 dark:text-gray-400 pb-1 block">Username</label>
+                    <label class="font-semibold text-sm text-gray-600 dark:text-gray-400 pb-1 block">{% trans %}Username{% endtrans %}</label>
                     <input type="text" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full dark:bg-gray-700 dark:text-gray-300" name="username" />
 
-                    <label class="font-semibold text-sm text-gray-600 dark:text-gray-400 pb-1 block">Password</label>
+                    <label class="font-semibold text-sm text-gray-600 dark:text-gray-400 pb-1 block">{% trans %}Password{% endtrans %}</label>
                     <input type="password" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full dark:bg-gray-700 dark:text-gray-300" name="password"/>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <button type="submit" class="transition duration-200 bg-purple-500 hover:bg-purple-600 focus:bg-purple-700 focus:shadow-sm focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
-                        <span class="inline-block mr-2">Login</span>
+                        <span class="inline-block mr-2">{% trans %}Sign in{% endtrans %}</span>
                     </button>
                 </form>
                 <div class="py-5">
@@ -30,15 +30,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block align-text-top">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                 </svg>
-                                <span class="inline-block ml-1">Forgot Password</span>
-                            </button>
-                        </div>
-                        <div class="text-center sm:text-right  whitespace-nowrap">
-                            <button class="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-300 dark:focus:bg-gray-800 focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-800 focus:ring-opacity-50 ring-inset">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block align-text-bottom	">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                                <span class="inline-block ml-1">Help</span>
+                                <span class="inline-block ml-1">{% trans %}Forgot Password{% endtrans %}</span>
                             </button>
                         </div>
                     </div>
@@ -52,7 +44,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block align-text-top">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
-                            <span class="inline-block ml-1">Back to home</span>
+                            <span class="inline-block ml-1">{% trans %}Back to home{% endtrans %}</span>
                         </a>
                     </div>
                 </div>
