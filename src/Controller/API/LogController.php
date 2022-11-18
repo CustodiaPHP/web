@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/logs')]
 class LogController extends AbstractController
 {
-	#[Route('/{id}', name: 'api_service_logs')]
+	#[Route('/{id}', name: 'api_service_logs', methods: ['GET'])]
     public function search_by_service(Service $service): Response
     {
         $filter = function (ServiceLog $log){

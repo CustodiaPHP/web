@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/status')]
 class StatusController extends AbstractController
 {
-	#[Route('/', name: 'api_status')]
+	#[Route('/', name: 'api_status', methods: ['GET'])]
     public function status(ServiceRepository $serviceRepository, Request $request): Response
     {
         if($request->headers->has("Accept") && $request->headers->get("Accept") == "application/json"){

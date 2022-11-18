@@ -1,6 +1,6 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | {% trans %}Incidents{% endtrans %}{% endblock %}
+{% block page_name %}{% trans %}Incidents{% endtrans %}{% endblock %}
 
 {% block maindata %}x-data="{ {% for incident in incidents %}'delete{{ incident.id }}': false,{% endfor %} }"{% endblock %}
 

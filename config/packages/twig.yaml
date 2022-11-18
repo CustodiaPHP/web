@@ -2,6 +2,7 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         settingsHelper: '@App\Helper\SettingsHelper'
+
 when@test:
     twig:
         strict_variables: true

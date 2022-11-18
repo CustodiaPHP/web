@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ServiceController extends AbstractController
 {
 
-	#[Route('/list', name: 'api_service_list')]
+	#[Route('/list', name: 'api_service_list', methods: ['GET'])]
     public function list(ServiceRepository $serviceRepository): Response
     {
         $services = $serviceRepository->findAll();
