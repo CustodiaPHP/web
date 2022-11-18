@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} | {% trans %}SignIn{% endtrans %}{% endblock %}
+{% block title %}{{ settingsHelper.general('page_name') }} | {% trans %}SignIn{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="min-h-screen bg-gray-100 dark:bg-gray-700 flex flex-col justify-center sm:py-12">
