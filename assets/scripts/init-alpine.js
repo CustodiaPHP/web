@@ -31,5 +31,9 @@ window.data = function () {
         toggleServicesMenu() {
             this.isServicesMenuOpen = !this.isServicesMenuOpen
         },
+        isSettingsMenuOpen: false,
+        toggleSettingsMenu() {
+            this.isSettingsMenuOpen = !this.isSettingsMenuOpen
+        },
     }
 }
