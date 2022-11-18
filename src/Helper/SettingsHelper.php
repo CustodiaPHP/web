@@ -20,6 +20,12 @@ class SettingsHelper {
 			'privacy_link' => false,
 			'imprint_link' => false,
 			'dashboard_link' => true
+		],
+		'notifications' => [
+			'enabled' => false,
+			'api_secret' => '',
+			'status_update' => false,
+			'new_incident' => false
 		]
 	];
 
