@@ -1,6 +1,6 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | {% trans %}Service Groups{% endtrans %}{% endblock %}
+{% block page_name %}{% trans %}Service Groups{% endtrans %}{% endblock %}
 
 {% block maindata %}x-data="{ {% for service_group in service_groups %}'delete{{ service_group.id }}': false,{% endfor %} }"{% endblock %}
 

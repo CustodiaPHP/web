@@ -39,6 +39,31 @@ class SettingRepository extends ServiceEntityRepository
         }
     }
 
+	public function update(string $name, array $value, bool $flush = false) : void
+	{
+		$setting = $this->findOneBy(['name' => $name]);
+
+		if($setting) {
+			$setting->setValue($value);
+
+			if ($flush) {
+				$this->getEntityManager()->flush();
+			}
+		} else {
+			$setting = new Setting();
+
+			$setting->setName($name);
+			$setting->setValue($value);
+
+			$this->add( $setting, $flush );
+		}
+	}
+
+	public function flush()
+	{
+		$this->getEntityManager()->flush();
+	}
+
 //    /**
 //     * @return Setting[] Returns an array of Setting objects
 //     */

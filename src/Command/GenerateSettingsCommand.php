@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Setting;
+use App\Helper\SettingsHelper;
 use App\Repository\SettingRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -21,18 +22,6 @@ class GenerateSettingsCommand extends Command
 
     private SettingRepository $settingRepository;
     private ManagerRegistry $managerRegistry;
-
-    const DEFAULT_SETTINGS = [
-        'general' => [
-            'page_name' => 'CustodiaPHP',
-            'dark_mode' => 0,
-        ],
-        'footer' => [
-            'privacy_link' => false,
-            'imprint_link' => false,
-            'dashboard_link' => true
-        ]
-    ];
 
     public function __construct(SettingRepository $settingRepository, ManagerRegistry $manager, string $name = null)
     {
@@ -53,7 +42,7 @@ class GenerateSettingsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        foreach (self::DEFAULT_SETTINGS as $settingKey => $settingValue)
+        foreach (SettingsHelper::DEFAULT_SETTINGS as $settingKey => $settingValue)
         {
             if($this->settingRepository->findOneBy(['name' => $settingKey]) === null)
             {

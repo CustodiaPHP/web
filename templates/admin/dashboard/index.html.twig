@@ -1,6 +1,6 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Admin | {% trans %}Dashboard{% endtrans %}{% endblock %}
+{% block page_name %}{% trans %}Dashboard{% endtrans %}{% endblock %}
 
 {% block content %}
 <div class="container px-6 mx-auto grid">
@@ -128,6 +128,16 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+            <div class="overflow-hidden bbg-white dark:bg-gray-800 dark:text-gray-400">
+                <div class="p-1">
+                    <canvas class="w-full h-auto dark:text-gray-400" id="dashboard-chart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>

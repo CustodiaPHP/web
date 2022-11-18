@@ -24,7 +24,7 @@ class FirebaseService {
     public function sendNotification(string $service, string $status) : mixed
     {
         $notification = [
-            'title' =>"$service status update",
+            'title' => "$service status update",
             'body' => "$service is $status",
             'sound' => 'default',
             'badge' => '1'
