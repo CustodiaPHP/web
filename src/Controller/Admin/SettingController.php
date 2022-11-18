@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SettingController extends AbstractController
 {
 
-    #[Route('/', name: 'app_admin_setting_index', methods: ['GET', 'POST'])]
+    #[Route('/general', name: 'app_admin_setting_general', methods: ['GET', 'POST'])]
     public function index(Request $request, SettingRepository $settingRepository): Response
     {
 		if ($request->getMethod() === 'POST') {
@@ -24,7 +24,7 @@ class SettingController extends AbstractController
 			$settingRepository->flush();
 		}
 
-        return $this->render('admin/setting/index.html.twig', [
+        return $this->render( 'admin/setting/general.html.twig', [
             'settings' => $settingRepository,
         ]);
     }
