@@ -3,17 +3,17 @@
       md:flex-row max-w-6xl">
         <div class="mt-2">{% trans with {'%year%': ('now' | date('Y'))} %}&copy; Copyright %year% by{% endtrans %}<a class="hover:underline" href="https://ancozockt.de">Ancozockt Environment</a>.{% trans %}All Rights Reserved.{% endtrans %}</div>
         <div class="md:flex-auto md:flex-row-reverse mt-2 flex-row flex">
-            {% if settingsHelper.footer('dashboard_link') %}
+            {% if settingsHelper.footer('dashboard_link') == 1 %}
             <a href="{{ path('app_admin_dashboard') }}" class="mx-3 hover:underline">
                 {% trans %}Dashboard{% endtrans %}
             </a>
             {% endif %}
-            {% if settingsHelper.footer('imprint_link') %}
+            {% if settingsHelper.footer('imprint_link') != 0 %}
             <a href="{{ settingsHelper.footer('imprint_link') }}" class="mx-3 hover:underline">
                 {% trans %}Imprint{% endtrans %}
             </a>
             {% endif %}
-            {% if settingsHelper.footer('privacy_link') %}
+            {% if settingsHelper.footer('privacy_link') != 0 %}
             <a href="{{ settingsHelper.footer('privacy_link') }}" class="mx-3 hover:underline">
                 {% trans %}Privacy{% endtrans %}
             </a>

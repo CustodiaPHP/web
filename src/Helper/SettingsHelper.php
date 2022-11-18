@@ -38,13 +38,13 @@ class SettingsHelper {
 	public function getGeneral(string $key) : mixed
 	{
 		$generalSettings = $this->settingRepository->findOneBy(['name' => 'general']);
-		return $generalSettings ? $generalSettings->getValue()[$key] : self::DEFAULT_SETTINGS['general'][$key];
+		return $generalSettings !== null ? ((array) $generalSettings->getValue())[$key] : self::DEFAULT_SETTINGS['general'][$key];
 	}
 
 	public function getFooter(string $key) : mixed
 	{
 		$generalSettings = $this->settingRepository->findOneBy(['name' => 'footer']);
-		return $generalSettings ? $generalSettings->getValue()[$key] : self::DEFAULT_SETTINGS['footer'][$key];
+		return $generalSettings !== null ? ((array) $generalSettings->getValue())[$key] : self::DEFAULT_SETTINGS['footer'][$key];
 	}
 
 }
