@@ -42,7 +42,7 @@
                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                             <input x-radio="privacy_link" x-radio-input="privacy_link_input" {% if settings.findOneBy({'name': 'footer'}).value['privacy_link'] != 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="radio[privacy_link]" value="">
                             <span class="ml-2">
-                                <input id="privacy_link_input" type="url" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'footer'}).value['privacy_link'] }}">
+                                <input id="privacy_link_input" type="url" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" {% if settings.findOneBy({'name': 'footer'}).value['privacy_link'] != 0 %}value="{{ settings.findOneBy({'name': 'footer'}).value['privacy_link'] }}"{% endif %} placeholder="https://example.com/privacy">
                             </span>
                         </label>
                         <input id="privacy_link" name="footer[privacy_link]" hidden type="text" value="{{ settings.findOneBy({'name': 'footer'}).value['privacy_link'] }}">
@@ -61,7 +61,7 @@
                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                             <input x-radio="imprint_link" x-radio-input="imprint_link_input" {% if settings.findOneBy({'name': 'footer'}).value['imprint_link'] != 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="radio[imprint_link]" value="">
                             <span class="ml-2">
-                                <input id="imprint_link_input" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'footer'}).value['imprint_link'] }}">
+                                <input id="imprint_link_input" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" {% if settings.findOneBy({'name': 'footer'}).value['imprint_link'] != 0 %}value="{{ settings.findOneBy({'name': 'footer'}).value['imprint_link'] }}"{% endif %} placeholder="https://example.com/imprint">
                             </span>
                         </label>
                         <input id="imprint_link" name="footer[imprint_link]" hidden type="text" value="{{ settings.findOneBy({'name': 'footer'}).value['imprint_link'] }}">
