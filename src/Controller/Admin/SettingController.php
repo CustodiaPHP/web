@@ -16,6 +16,10 @@ class SettingController extends AbstractController
     #[Route('/general', name: 'app_admin_setting_general', methods: ['GET', 'POST'])]
     public function index(Request $request, SettingRepository $settingRepository): Response
     {
+		if(!$this->isGranted('ROLE_SUPER_ADMIN')){
+			return $this->redirectToRoute('app_admin_dashboard');
+		}
+
 		if ($request->getMethod() === 'POST') {
 			foreach (SettingsHelper::SETTINGS as $setting) {
 				$value = $this->sanitizeSetting($setting, (array) $request->request->get($setting));
