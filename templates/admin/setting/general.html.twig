@@ -2,6 +2,11 @@
 
 {% block page_name %}{% trans %}General Settings{% endtrans %}{% endblock %}
 
+{% block customscripts %}
+    <script>
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="container px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -31,15 +36,16 @@
                     </span>
                     <div class="mt-2">
                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                            <input {% if settings.findOneBy({'name': 'footer'}).value['privacy_link'] == 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="footer[privacy_link]" value="0">
+                            <input x-radio="privacy_link" x-radio-value="0" {% if settings.findOneBy({'name': 'footer'}).value['privacy_link'] == 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="radio[privacy_link]" value="0">
                             <span class="ml-2">{% trans %}Disabled{% endtrans %}</span>
                         </label>
                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                            <input {% if settings.findOneBy({'name': 'footer'}).value['privacy_link'] != 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="footer[privacy_link]" value="">
+                            <input x-radio="privacy_link" x-radio-input="privacy_link_input" {% if settings.findOneBy({'name': 'footer'}).value['privacy_link'] != 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="radio[privacy_link]" value="">
                             <span class="ml-2">
-                                <input name="footer[privacy_link]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'footer'}).value['privacy_link'] }}">
+                                <input id="privacy_link_input" type="url" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'footer'}).value['privacy_link'] }}">
                             </span>
                         </label>
+                        <input id="privacy_link" name="footer[privacy_link]" hidden type="text" value="{{ settings.findOneBy({'name': 'footer'}).value['privacy_link'] }}">
                     </div>
                 </div>
 
@@ -49,15 +55,16 @@
                     </span>
                     <div class="mt-2">
                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                            <input {% if settings.findOneBy({'name': 'footer'}).value['imprint_link'] == 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="footer[imprint_link]" value="0">
+                            <input x-radio="imprint_link" x-radio-value="0" {% if settings.findOneBy({'name': 'footer'}).value['imprint_link'] == 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="radio[imprint_link]" value="0">
                             <span class="ml-2">{% trans %}Disabled{% endtrans %}</span>
                         </label>
                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                            <input {% if settings.findOneBy({'name': 'footer'}).value['imprint_link'] != 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="footer[imprint_link]" value="">
+                            <input x-radio="imprint_link" x-radio-input="imprint_link_input" {% if settings.findOneBy({'name': 'footer'}).value['imprint_link'] != 0 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="radio[imprint_link]" value="">
                             <span class="ml-2">
-                                <input name="footer[imprint_link]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'footer'}).value['imprint_link'] }}">
+                                <input id="imprint_link_input" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'footer'}).value['imprint_link'] }}">
                             </span>
                         </label>
+                        <input id="imprint_link" name="footer[imprint_link]" hidden type="text" value="{{ settings.findOneBy({'name': 'footer'}).value['imprint_link'] }}">
                     </div>
                 </div>
 
