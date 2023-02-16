@@ -7,27 +7,29 @@
     {% include 'elements/theme_toggle.html.twig' %}
     <div class="pt-8">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" id="status-overview">
-            {% include 'main/status_overview.html.twig' with {'services': services}%}
+            {% include 'main/status_overview.html.twig' with {'services': services} %}
         </div>
     </div>
     {% for group in groups %}
         {% if group.publicServices | length > 0 or is_granted('ROLE_USER') and group.services | length > 0 %}
             <div class="py-5">
                 <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-                    <div class="overflow-hidden shadow-md bg-gray-100 dark:bg-gray-900 rounded-xl">
+                    <div class="overflow-hidden border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 rounded-md">
                         <div class="rounded-t px-6 py-4 font-bold uppercase text-gray-700 dark:text-gray-400">
                             {{ group.name }}
                         </div>
 
                         {% for service in (is_granted('ROLE_USER') ? group.services : group.publicServices) %}
-                            <div class="p-6 border-0 border-t-2 border-gray-200 dark:border-gray-800">
-                                <div class="grid grid-cols-6">
-                                    <div class="col-span-5">
+                            <div class="p-6 border-0 border-t border-gray-200 dark:border-gray-700">
+                                <div class="flex flex-row justify-items-stretch w-full">
+                                    <div class="flex-1">
                                         <a href="{{ service.url }}" class="text-gray-600 dark:text-gray-400 hover:font-bold">{{ service.name }}</a>
                                     </div>
-                                    <a href="{{ path('app_service_view', {'name': service.name}) }}" class="col-span-1 status-badge" x-service="{{ service.id }}">
-                                        {% include 'main/status_badge.html.twig' with {'service': service} %}
-                                    </a>
+                                    <div class="justify-self-start">
+                                        <a href="{{ path('app_service_view', {'name': service.name}) }}" class="status-badge" x-service="{{ service.id }}">
+                                            {% include 'main/status_badge.html.twig' with {'service': service} %}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}

@@ -1,9 +1,3 @@
-<div x-data="{ tooltip_{{ id }}: false }"
-     x-on:mouseover="tooltip_{{ id }} = true"
-     x-on:mouseleave="tooltip_{{ id }} = false"
+<div x-tooltip.raw="{% trans %}Performance Issues{% endtrans %}" x-tooltip.on.mouseenter
      class="rounded-full w-5 h-5 border border-blue-500 bg-blue-400 uppercase text-center text-white font-bold shadow">
-    <div x-show="tooltip_{{ id }}"
-         class="text-sm text-white absolute bg-blue-400 rounded-full p-2 transform -translate-y-3 translate-x-8 shadow-md" >
-        {% trans %}Performance Issues{% endtrans %}
-    </div>
 </div>

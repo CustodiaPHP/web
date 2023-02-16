@@ -12,7 +12,21 @@
     </div>
     <div class="py-5">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-hidden shadow-md bg-gray-100 dark:bg-gray-900 dark:text-gray-400 rounded-xl">
+            <div class="overflow-hidden font-bold text-gray-700 dark:text-gray-400 py-5">
+                <div class="flex flex-row w-full justify-items-stretch">
+                    <div class="justify-self-end">
+                        <a href="{{ path('app_welcome') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <span class="text-2xl">{{ service.name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-hidden border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 rounded-md">
                 <div class="p-1">
                     <canvas class="w-full h-auto dark:text-gray-400" x-service="{{ service.id }}" id="log-chart"></canvas>
                 </div>
