@@ -8,7 +8,9 @@ class SettingsHelper {
 
 	const SETTINGS = [
 		'general',
-		'footer'
+		'footer',
+		'notifications',
+		'email'
 	];
 
 	const DEFAULT_SETTINGS = [

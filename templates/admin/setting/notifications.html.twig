@@ -1,0 +1,121 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block page_name %}{% trans %}Notification Settings{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            {% trans %}Notification Settings{% endtrans %}
+        </h2>
+        <form action="{{ path('app_admin_setting_notifications') }}" method="post">
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <div class="mt-4 flex flex-row gap-4 justify-items-stretch">
+                    <div class="text-sm justify-self-end flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">
+                          {% trans %}E-Mail Notifications{% endtrans %}
+                        </span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'email'}).value['enabled'] == 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="email[enabled]" value="1">
+                                <span class="ml-2">{% trans %}Enabled{% endtrans %}</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'email'}).value['enabled'] != 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="email[enabled]" value="0">
+                                <span class="ml-2">{% trans %}Disabled{% endtrans %}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-sm justify-self-start flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">
+                          {% trans %}App Notifications{% endtrans %}
+                        </span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'notifications'}).value['enabled'] == 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="notifications[enabled]" value="1">
+                                <span class="ml-2">{% trans %}Enabled{% endtrans %}</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'notifications'}).value['enabled'] != 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="notifications[enabled]" value="0">
+                                <span class="ml-2">{% trans %}Disabled{% endtrans %}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex flex-row gap-4 justify-items-stretch">
+                    <label class="block text-sm justify-self-end flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">{% trans %}Hostname{% endtrans %}</span>
+                        <input name="email[host]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['host'] }}">
+                    </label>
+                    <label class="block text-sm justify-self-start">
+                        <span class="text-gray-700 dark:text-gray-400">{% trans %}Port{% endtrans %}</span>
+                        <input name="email[port]" type="number" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['port'] }}">
+                    </label>
+                </div>
+
+                <div class="mt-4 flex flex-row gap-4 justify-items-stretch">
+                    <label class="block text-sm justify-self-end flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">{% trans %}Username{% endtrans %}</span>
+                        <input name="email[host]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['username'] }}">
+                    </label>
+                    <label class="block text-sm justify-self-start flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">{% trans %}Password{% endtrans %}</span>
+                        <input name="email[password]" type="password" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['password'] }}">
+                    </label>
+                </div>
+
+                <div class="mt-4 flex flex-row gap-4 justify-items-stretch">
+                    <label class="block text-sm justify-self-end flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">{% trans %}Sender{% endtrans %}</span>
+                        <input name="email[from]" type="email" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['from'] }}">
+                    </label>
+                    <label class="block text-sm justify-self-start flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">{% trans %}Sender Name{% endtrans %}</span>
+                        <input name="email[from_name]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['from_name'] }}">
+                    </label>
+                </div>
+
+                <hr class="h-0.5 rounded-full my-4 bg-gray-200 dark:border-gray-600 dark:bg-gray-700">
+
+                <div class="mt-4 flex flex-row gap-4 justify-items-stretch">
+                    <div class="text-sm justify-self-end flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">
+                          {% trans %}Status Updates{% endtrans %}
+                        </span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'notifications'}).value['status_update'] == 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="notifications[status_update]" value="1">
+                                <span class="ml-2">{% trans %}Enabled{% endtrans %}</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'notifications'}).value['status_update'] != 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="notifications[status_update]" value="0">
+                                <span class="ml-2">{% trans %}Disabled{% endtrans %}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-sm justify-self-start flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">
+                          {% trans %}Incidents{% endtrans %}
+                        </span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'notifications'}).value['new_incident'] == 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="notifications[new_incident]" value="1">
+                                <span class="ml-2">{% trans %}Enabled{% endtrans %}</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input {% if settings.findOneBy({'name': 'notifications'}).value['new_incident'] != 1 %}checked{% endif %} type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="notifications[new_incident]" value="0">
+                                <span class="ml-2">{% trans %}Disabled{% endtrans %}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-6">
+                    <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
+                        {% trans %}Save{% endtrans%}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
