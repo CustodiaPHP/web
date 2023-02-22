@@ -3,7 +3,6 @@
 {% block title %}{{ settingsHelper.general('page_name') }}{% endblock %}
 
 {% block content %}
-<div class="h-screen dark:bg-gray-700">
     {% include 'elements/theme_toggle.html.twig' %}
     <div class="pt-8">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" id="status-overview">
@@ -39,11 +38,11 @@
         {% endif %}
     {% endfor %}
     {% if incidents | length > 0 %}
-    <div class="py-5">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-           <div class="border-0 border-t-2 border-gray-200 dark:border-gray-400">
-               <h1 class="py-2 text-4xl">{% trans %}Past Incidents{% endtrans %}</h1>
-               <div class="border-l-2 mt-10">
+    <div class="hidden lg:block py-5">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 pb-10">
+           <div class="border-0 border-t-2 border-gray-300 dark:border-gray-600">
+               <h1 class="py-2 text-4xl text-gray-600 dark:text-gray-300">{% trans %}Past Incidents{% endtrans %}</h1>
+               <div class="border-l-2 mt-10 border-gray-300 dark:border-gray-600">
                    {% for incident in incidents %}
                        {% include 'main/incident.html.twig' with {'incident': incident} %}
                    {% endfor %}
@@ -52,5 +51,4 @@
         </div>
     </div>
     {% endif %}
-</div>
 {% endblock %}

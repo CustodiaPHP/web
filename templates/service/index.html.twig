@@ -3,7 +3,6 @@
 {% block title %}{{ settingsHelper.general('page_name') }}{% endblock %}
 
 {% block content %}
-<div class="h-screen dark:bg-gray-700">
     {% include 'elements/theme_toggle.html.twig' %}
     <div class="pt-8">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" id="head-badge" x-service="{{ service.id }}">
@@ -33,5 +32,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
