@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% block content %}{% endblock %}
+    <main class="min-h-screen dark:bg-gray-700">
+        {% block content %}{% endblock %}
+    </main>
     {% include 'elements/footer.html.twig' %}
 {% endblock %}

@@ -28,7 +28,6 @@
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">{% trans %}ID{% endtrans %}</th>
                         <th class="px-4 py-3">{% trans %}Title{% endtrans %}</th>
-                        <th class="px-4 py-3">{% trans %}Message{% endtrans %}</th>
                         <th class="px-4 py-3">{% trans %}Status{% endtrans %}</th>
                         <th class="px-4 py-3">{% trans %}Created{% endtrans %}</th>
                         <th class="px-4 py-3">{% trans %}Actions{% endtrans %}</th>
@@ -49,9 +48,6 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-4 py-3 text-sm">
-                                {{ incident.message }}
-                            </td>
                             <td class="px-4 py-3 text-xs">
                                 {% if incident.status == 1 %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-green-500 bg-green-100 rounded-full dark:bg-green-500 dark:text-green-100">
@@ -67,7 +63,7 @@
                                     </span>
                                 {% elseif incident.status == 4 %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-red-500 bg-red-100 rounded-full dark:bg-red-500 dark:text-red-100">
-                                      {% trans %}Minor Outage{% endtrans %}
+                                      {% trans %}Major Outage{% endtrans %}
                                     </span>
                                 {% else %}
                                     <span class="px-2 py-1 font-semibold leading-tight text-gray-500 bg-gray-100 rounded-full dark:bg-gray-500 dark:text-gray-100">
