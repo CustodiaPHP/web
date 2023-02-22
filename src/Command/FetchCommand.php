@@ -92,9 +92,8 @@ class FetchCommand extends Command
         $startTime = round(microtime(true) * 1000);
         $sock = @fsockopen($host, $port, $error_code, $error, 15);
         if(!$sock){
-            $endTime = round(microtime(true) * 1000);
-            $responseTime = $endTime - $startTime;
-            if($service->getCurrentStatus() == 3){
+            $responseTime = 0;
+            if(in_array($service->getCurrentStatus(), [3, 4])){
                 $log->setStatus(4);
             }else{
                 $log->setStatus(3);
@@ -127,18 +126,20 @@ class FetchCommand extends Command
         try {
             $response = $client->get($service->getAddress());
             if($response->getStatusCode() != 200){
-                if($service->getCurrentStatus() == 3){
+				$responseTime = 0;
+                if(in_array($service->getCurrentStatus(), [3, 4])){
                     $log->setStatus(4);
                 }else{
                     $log->setStatus(3);
                 }
-            }
-            $endTime = round(microtime(true) * 1000);
-            $responseTime = $endTime - $startTime;
-            if(($responseTime / 1000) > ($this->getAverage($service) / 1000) * $this->RESPONSE_MULTIPLIER){
-                $log->setStatus(2);
-            }else{
-                $log->setStatus(1);
+            } else {
+				$endTime = round(microtime(true) * 1000);
+				$responseTime = $endTime - $startTime;
+				if(($responseTime / 1000) > ($this->getAverage($service) / 1000) * $this->RESPONSE_MULTIPLIER){
+					$log->setStatus(2);
+				}else{
+					$log->setStatus(1);
+				}
             }
         } catch (GuzzleException $e) {
             $endTime = round(microtime(true) * 1000);
@@ -157,6 +158,7 @@ class FetchCommand extends Command
     {
         if($latestLog->getStatus() > 1)
         {
+
           if($service->getServiceLogs()->last()->getStatus() == $latestLog->getStatus() || $latestLog->getStatus() == 4)
           {
             $this->notify($service, $latestLog, $output);
@@ -212,5 +214,16 @@ class FetchCommand extends Command
 
         return $value / count($logs);
     }
+
+	private function getLastStatus(Service $service, int $amount = 5) : array {
+		$logs = $this->serviceRepository->findBy(['id' => $service->getId()], ['id' => 'DESC'], $amount, 0);
+
+		$value = [ 0, 0, 0, 0, 0 ];
+		foreach ($logs as $log){
+			$value[$log->getStatus()] += 1;
+		}
+
+		return array_slice($value, -5);
+	}
 
 }
