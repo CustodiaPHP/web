@@ -200,7 +200,7 @@ class FetchCommand extends Command {
 	}
 
 	private function getLastStatus( Service $service, int $amount = 5 ): array {
-		$logs = $this->serviceRepository->findBy( [ 'id' => $service->getId() ], [ 'id' => 'DESC' ], $amount, 0 );
+		$logs = $this->logRepository->findBy( [ 'service' => $service ], [ 'id' => 'DESC' ], $amount, 0 );
 
 		$value = [ 0, 0, 0, 0, 0 ];
 		foreach ( $logs as $log ) {
