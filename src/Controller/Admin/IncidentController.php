@@ -17,7 +17,7 @@ class IncidentController extends AbstractController
     public function index(IncidentRepository $incidentRepository): Response
     {
         return $this->render('admin/incident/index.html.twig', [
-            'incidents' => $incidentRepository->findAll(),
+            'incidents' => array_reverse( $incidentRepository->findAll() ),
         ]);
     }
 
