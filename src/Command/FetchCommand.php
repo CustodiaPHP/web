@@ -72,7 +72,7 @@ class FetchCommand extends Command {
 		return Command::SUCCESS;
 	}
 
-	private function pingServer( Service $service, OutputInterface $output ) {
+	private function pingServer( Service $service, OutputInterface $output ): void {
 		$log = new ServiceLog();
 		$log->setService( $service );
 		$address = explode( ':', $service->getAddress() );
@@ -109,7 +109,7 @@ class FetchCommand extends Command {
 		$this->updateStatus( $service, $log, $output );
 	}
 
-	private function pingWebsite( Client $client, Service $service, OutputInterface $output ) {
+	private function pingWebsite( Client $client, Service $service, OutputInterface $output ): void {
 		$log = new ServiceLog();
 		$log->setService( $service );
 
@@ -132,7 +132,7 @@ class FetchCommand extends Command {
 					$log->setStatus( 1 );
 				}
 			}
-		} catch ( GuzzleException $e ) {
+		} catch ( GuzzleException ) {
 			$endTime      = round( microtime( true ) * 1000 );
 			$responseTime = $endTime - $startTime;
 			$log->setStatus( 0 );
@@ -145,7 +145,7 @@ class FetchCommand extends Command {
 		$this->updateStatus( $service, $log, $output );
 	}
 
-	private function updateStatus( Service $service, ServiceLog $latestLog, OutputInterface $output ) {
+	private function updateStatus( Service $service, ServiceLog $latestLog, OutputInterface $output ): void {
 		if ( $latestLog->getStatus() > 1 ) {
 			$lastLogs = $this->getLastStatus( $service, $this->STATUS_THRESHOLD );
 			if ( $lastLogs[$latestLog->getStatus()] === $this->STATUS_THRESHOLD || $latestLog->getStatus() === 4 ) {
@@ -158,7 +158,7 @@ class FetchCommand extends Command {
 		}
 	}
 
-	private function notify( Service $service, ServiceLog $log, OutputInterface $output ) {
+	private function notify( Service $service, ServiceLog $log, OutputInterface $output ): void {
 		if ( $service->getCurrentStatus() == $log->getStatus() ) {
 			return;
 		}
@@ -174,7 +174,7 @@ class FetchCommand extends Command {
 		}
 	}
 
-	private function clearOldLogs() {
+	private function clearOldLogs(): void {
 		$currentDate = new DateTime();
 		$toOld       = $currentDate->sub( new \DateInterval( 'P2W' ) );
 
@@ -196,7 +196,7 @@ class FetchCommand extends Command {
 			$value += $log->getResponseTime();
 		}
 
-		return $value / count( $logs );
+		return $value / max(1, count( $logs ) );
 	}
 
 	private function getLastStatus( Service $service, int $amount = 5 ): array {
