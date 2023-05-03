@@ -18,6 +18,7 @@
             </div>
         </div>
         <ul class="flex items-center flex-shrink-0 space-x-6">
+            {% if settingsHelper.general('dark_mode') == 0 %}
             <li class="flex">
                 <button class="rounded-md focus:outline-none focus:shadow-outline-blue"
                         @click="toggleTheme"
@@ -30,6 +31,7 @@
                     </svg>
                 </button>
             </li>
+            {% endif %}
             <li class="relative">
                 <button class="align-middle rounded-full focus:shadow-outline-blue focus:outline-none"
                         @click="isProfileMenuOpen = !isProfileMenuOpen"
