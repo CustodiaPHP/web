@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html x-bind:class="dark ? 'dark' : ''" x-data="data()" {% block htmltags %}{% endblock %} lang="en">
+<html {% if settingsHelper.general('dark_mode') == 0 %}x-bind:class="dark ? 'dark' : ''"{% elseif settingsHelper.general('dark_mode') == 2 %}class="dark"{% endif %} x-data="data()" {% block htmltags %}{% endblock %} lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}

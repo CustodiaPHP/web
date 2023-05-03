@@ -32,6 +32,7 @@ class LogController extends AbstractController
             "name" => $service->getName(),
             "times" => $logs
         );
+
         return new JsonResponse($data);
     }
 }

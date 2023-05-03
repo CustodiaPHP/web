@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
 	#[Route('/', name: 'app_welcome')]
-    public function index(ServiceGroupRepository $repository,
-                          ServiceRepository $serviceRepository,
-                          IncidentRepository $incidents): Response
+    public function index(ServiceGroupRepository $repository, ServiceRepository $serviceRepository, IncidentRepository $incidents): Response
     {
         return $this->render('main/index.html.twig', [
             'groups' => $repository->findBy([
@@ -32,6 +30,7 @@ class MainController extends AbstractController
         if(!$service->isPublic() && !$this->isGranted('ROLE_USER')){
             return $this->redirectToRoute('app_login');
         }
+
         return $this->render('service/index.html.twig', [
             'service' => $service,
             'logs' => $service->getServiceLogs()

@@ -1,6 +1,6 @@
 <footer class="fixed bottom-0 left-0 w-screen bg-gray-100 dark:bg-gray-900 pt-2 z-20">
     <div class="flex pb-5 px-3 m-auto pt-5 border-t dark:border-gray-700 text-gray-800 dark:text-gray-400 text-sm flex-col md:flex-row max-w-6xl">
-        <div class="mt-2">{% trans %}Powered by{% endtrans %} <a class="hover:underline" href="https://ancozockt.de">CustodiaPHP</a>.</div>
+        <div class="mt-2">{% trans %}Powered by{% endtrans %} <a class="text-green-500 hover:underline" href="https://ancozockt.de">CustodiaPHP</a>.</div>
         <div class="md:flex-auto md:flex-row-reverse mt-2 flex-row flex">
             {% if settingsHelper.footer('dashboard_link') == 1 %}
             <a href="{{ path('app_admin_dashboard') }}" class="mx-3 hover:underline">
