@@ -59,7 +59,26 @@ class SettingController extends AbstractController
 
 	private function sanitizeSetting(string $key, array $value) : array
 	{
-		return array_merge(SettingsHelper::DEFAULT_SETTINGS[$key], $value);
+		foreach (SettingsHelper::DEFAULT_SETTINGS[$key] as $k => $v) {
+			if ( ! array_key_exists($k, $value) && $this->is_checkbox($v) ) {
+				$value[$k] = 0;
+			}
+		}
+
+		$merged = array_merge(SettingsHelper::DEFAULT_SETTINGS[$key], $value);
+
+		foreach ($merged as $k => $v) {
+			if ( $v == 'on' && $this->is_checkbox( SettingsHelper::DEFAULT_SETTINGS[$key][$k] ) ) {
+				$merged[$k] = 1;
+			}
+		}
+
+		return $merged;
+	}
+
+	private function is_checkbox($value) : bool
+	{
+		return preg_match('#^[0-1]$#', (string) $value) === 1;
 	}
 
 }
