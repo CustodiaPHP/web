@@ -19,6 +19,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	#[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private $username;
 
+    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
+    private $email;
+
 	#[ORM\Column(type: Types::JSON)]
     private $roles = [];
 
@@ -38,6 +41,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -69,6 +84,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getRoleName(): string
+    {
+        $role = $this->getRoles()[0];
+
+        $role = str_replace('ROLE_', '', $role);
+        $role = str_replace('_', ' ', $role);
+        $role = strtolower($role);
+
+        return ucwords($role);
+    }
+
+    public function isGranted(string $role): bool
+    {
+        return in_array($role, $this->getRoles());
     }
 
     /**
