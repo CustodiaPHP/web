@@ -3,6 +3,11 @@
 namespace App\Helper;
 
 use App\Repository\SettingRepository;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Transport\Dsn;
+use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
 
 class SettingsHelper {
 
@@ -24,13 +29,13 @@ class SettingsHelper {
 			'dashboard_link' => true
 		],
 		'notifications' => [
-			'enabled' => false,
+			'enabled' => 0,
 			'api_secret' => '',
-			'status_update' => false,
-			'new_incident' => false
+			'status_update' => 1,
+			'new_incident' => 1
 		],
 		'email' => [
-			'enabled' => false,
+			'enabled' => 0,
 			'host' => 'localhost',
 			'port' => 587,
 			'username' => '',
@@ -83,11 +88,18 @@ class SettingsHelper {
 		}
 
 		return sprintf(
-			'smtp://%s:%s@%s:%d',
-			$this->getEmail('username'),
-			$this->getEmail('password'),
-			$this->getEmail('host'),
-			$this->getEmail('port')
-		);
+            'smtp://%s:%s@%s:%d',
+            urlencode($this->getEmail('username')),
+            urlencode($this->getEmail('password')),
+            $this->getEmail('host'),
+            (int) $this->getEmail('port')
+        );
 	}
+
+    public function getMailer() : MailerInterface
+    {
+        $transport = Transport::fromDsn($this->getMailerDSN());
+        return new Mailer($transport);
+    }
+
 }
