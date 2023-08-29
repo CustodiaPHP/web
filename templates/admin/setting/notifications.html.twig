@@ -42,7 +42,7 @@
                 <div class="mt-4 flex flex-row gap-4 justify-items-stretch">
                     <label class="block text-sm justify-self-end flex-1">
                         <span class="text-gray-700 dark:text-gray-400">{% trans %}Username{% endtrans %}</span>
-                        <input name="email[host]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['username'] }}">
+                        <input name="email[username]" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" value="{{ settings.findOneBy({'name': 'email'}).value['username'] }}">
                     </label>
                     <label class="block text-sm justify-self-start flex-1">
                         <span class="text-gray-700 dark:text-gray-400">{% trans %}Password{% endtrans %}</span>

@@ -1,5 +1,3 @@
 framework:
     mailer:
-        dsn: '@App\Helper\SettingsHelper::getMailerDSN'
-        headers:
-            From: '@App\Helper\SettingsHelper::getEmailSender'
+        dsn: 'null://null'
