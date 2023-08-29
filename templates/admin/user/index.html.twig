@@ -46,11 +46,15 @@
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                {% for role in user.roles %}
-                                    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                      {{ role }}
+                                {% if user.granted('ROLE_SUPER_ADMIN') %}
+                                    <span class="px-2 py-1 font-semibold leading-tight text-red-500 bg-red-100 rounded-full dark:bg-red-500 dark:text-red-100">
+                                      {{ user.roleName }}
                                     </span>
-                                {% endfor %}
+                                {% else %}
+                                    <span class="px-2 py-1 font-semibold leading-tight text-green-600 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                      {{ user.roleName }}
+                                    </span>
+                                {% endif %}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex flex-col flex-wrap md:flex-row md:items-end md:space-x-2">
@@ -61,6 +65,7 @@
                                             </svg>
                                         </a>
                                     </div>
+                                    {% if not user.granted('ROLE_SUPER_ADMIN') %}
                                     <div>
                                         <button @click="delete{{ user.id }} = !delete{{ user.id }}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red" aria-label="Like">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -68,6 +73,7 @@
                                             </svg>
                                         </button>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </td>
                         </tr>
