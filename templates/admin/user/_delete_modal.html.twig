@@ -24,7 +24,7 @@
         </header>
         <div class="mt-4 mb-6">
             <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                {% trans with {'%name%': user.name} %}Delete %name%{% endtrans %}
+                {% trans with {'%name%': user.username} %}Delete %name%{% endtrans %}
             </p>
             <p class="text-sm text-gray-700 dark:text-gray-400">
                 {% trans %}Are you sure you want to delete this user?{% endtrans %}
