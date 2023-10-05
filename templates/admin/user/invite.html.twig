@@ -1,0 +1,15 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block page_name %}{% trans %}Users{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            {% trans %}Invite user{% endtrans %}
+        </h2>
+
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            {% include 'admin/user/_form.html.twig' with {'button_label': 'Invite'} %}
+        </div>
+    </div>
+{% endblock %}
