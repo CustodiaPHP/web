@@ -2,6 +2,9 @@
 
 {% block body %}
     <main class="min-h-screen dark:bg-gray-700">
+        {% if settingsHelper.general('dark_mode') == 0 %}
+            {% include 'elements/theme_toggle.html.twig' %}
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
     {% include 'elements/footer.html.twig' %}

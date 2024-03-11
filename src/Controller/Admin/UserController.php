@@ -3,7 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Entity\UserInvite;
+use App\Form\UserInviteType;
 use App\Form\UserType;
+use App\Repository\UserInviteRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,23 +24,26 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_user_invite', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository): Response
+    #[Route('/invite', name: 'app_admin_user_invite', methods: ['GET', 'POST'])]
+    public function new(Request $request, UserInviteRepository $inviteRepository): Response
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $invite = new UserInvite();
+        $form = $this->createForm(UserInviteType::class, $invite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+			$invite->setCreated(new \DateTime());
+			$invite->setCode($this->generateCode());
+
+            $inviteRepository->add($invite, true);
 
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/user/invite.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
+		return $this->render('admin/user/invite.html.twig', [
+			'invite' => $invite,
+			'form' => $form->createView(),
+		]);
     }
 
     #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
@@ -51,14 +57,15 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+			$user->setRoles([$form->get('role')->getData()]);
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/user/edit.html.twig', [
+        return $this->render('admin/user/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -75,4 +82,8 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+	private function generateCode() : string {
+		return uniqid('invite_', true);
+	}
 }

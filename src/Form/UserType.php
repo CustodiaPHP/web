@@ -21,9 +21,10 @@ class UserType extends AbstractType
                     'class' => 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-300 dark:focus:shadow-outline-gray form-input'
                 ]
             ])
-            ->add('roles', ChoiceType::class, [
+            ->add('role', ChoiceType::class, [
                 'label' => false,
-                'multiple' => true,
+				'mapped' => false,
+                'multiple' => false,
                 'attr' => [
                     'class' => 'block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-blue-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray'
                 ],

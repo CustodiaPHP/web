@@ -3,9 +3,6 @@
 {% block title %}{{ settingsHelper.general('page_name') }}{% endblock %}
 
 {% block content %}
-    {% if settingsHelper.general('dark_mode') == 0 %}
-        {% include 'elements/theme_toggle.html.twig' %}
-    {% endif %}
     <div class="pt-8">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" id="status-overview">
             {% include 'main/status_overview.html.twig' with {'services': services} %}
