@@ -17,6 +17,15 @@ class InviteController extends AbstractController
     #[Route('/join/{code}', name: 'app_invite_join')]
     public function index(Request $request, UserInvite $invite, UserRepository $userRepository, UserPasswordHasherInterface $hasher): Response
     {
+		if ($this->getUser()) {
+			return $this->redirectToRoute('app_admin_dashboard');
+		}
+
+		if ($invite->isExpired()) {
+			$this->addFlash('error', 'The invite has expired');
+			return $this->redirectToRoute('app_welcome');
+		}
+
 		$form = $this->createForm(JoinType::class);
 		$form->handleRequest($request);
 

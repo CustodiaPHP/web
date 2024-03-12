@@ -91,4 +91,9 @@ class UserInvite
 
         return $this;
     }
+
+	public function isExpired(): bool
+	{
+		return $this->created->diff(new \DateTime())->days >= 1;
+	}
 }

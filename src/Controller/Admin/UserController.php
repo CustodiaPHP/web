@@ -6,12 +6,15 @@ use App\Entity\User;
 use App\Entity\UserInvite;
 use App\Form\UserInviteType;
 use App\Form\UserType;
+use App\Helper\SettingsHelper;
 use App\Repository\UserInviteRepository;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/user')]
 class UserController extends AbstractController
@@ -25,7 +28,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/invite', name: 'app_admin_user_invite', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserInviteRepository $inviteRepository): Response
+    public function new(Request $request, UserInviteRepository $inviteRepository,
+						SettingsHelper $settingsHelper, TranslatorInterface $translator): Response
     {
         $invite = new UserInvite();
         $form = $this->createForm(UserInviteType::class, $invite);
@@ -36,6 +40,17 @@ class UserController extends AbstractController
 			$invite->setCode($this->generateCode());
 
             $inviteRepository->add($invite, true);
+
+			$email = (new TemplatedEmail())
+				->from($settingsHelper->getEmailSender())
+				->context([
+					'invite' => $invite,
+				])
+				->addTo($invite->getEmail())
+				->subject($translator->trans('You have been invited to join the team at {site}', [
+					'{site}' => $settingsHelper->getGeneral('page_name'),
+				]))
+				->htmlTemplate('email/invite.html.twig');
 
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
