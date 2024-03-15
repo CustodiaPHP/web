@@ -1,5 +1,8 @@
 module.exports = {
   content: [
+      "./install/pages/*.php",
+      "./install/elements/*.php",
+      "./install/index.php",
       "./templates/**/*.html.twig",
       "./templates/**/**/*.html.twig",
       "./templates/**/**/**/*.html.twig",
