@@ -24,9 +24,10 @@
             <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                     <thead>
-                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-3">{% trans %}ID{% endtrans %}</th>
                             <th class="px-4 py-3">{% trans %}Name{% endtrans %}</th>
+                            <th class="px-4 py-3">{% trans %}E-Mail{% endtrans %}</th>
                             <th class="px-4 py-3">{% trans %}Roles{% endtrans %}</th>
                             <th class="px-4 py-3">{% trans %}Actions{% endtrans %}</th>
                         </tr>
@@ -43,6 +44,13 @@
                                 <div class="flex items-center text-sm">
                                     <div>
                                         <p class="font-semibold">{{ user.username }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <div>
+                                        <p class="font-semibold">{{ user.email }}</p>
                                     </div>
                                 </div>
                             </td>
