@@ -9,18 +9,18 @@ class Environment
 		'DATABASE_URL' => 'mysql://user:password@localhost:3306/database'
 	];
 
-	public static function getEnv($key)
-	{
+	public static function getEnv($key): string
+    {
 		return self::$env[$key];
 	}
 
-	public static function setEnv($key, $value)
-	{
+	public static function setEnv($key, $value): void
+    {
 		self::$env[$key] = $value;
 	}
 
-	public static function writeEnv()
-	{
+	public static function writeEnv(): void
+    {
 		$env = '';
 		foreach (self::$env as $key => $value) {
 			$env .= $key . '=' . $value . PHP_EOL;

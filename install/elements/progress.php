@@ -3,7 +3,7 @@ if (empty(STEP) || STEP == 0) {
 	return;
 }
 
-function stepColor($step)
+function stepColor($step): string
 {
 	if (STEP >= $step) {
 		return 'bg-green-500';
@@ -12,7 +12,7 @@ function stepColor($step)
 
 }
 
-function stepProgressColor($step)
+function stepProgressColor($step): string
 {
 	if (STEP <= $step) {
 		return 'bg-green-300';
