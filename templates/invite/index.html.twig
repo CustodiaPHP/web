@@ -1,0 +1,44 @@
+{% extends 'layouts/frontend.html.twig' %}
+
+{% block title %}{{ settingsHelper.general('page_name') }} | {% trans %}Join{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="pt-8">
+    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="overflow-hidden border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 rounded pt-1 p-5">
+            <h1 class="dark:text-white text-xl font-semibold">{% trans %}Join{% endtrans %} {{ settingsHelper.general('page_name') }}</h1>
+            <label class="block text-sm mt-2">
+                <span class="text-gray-700 dark:text-gray-400">{% trans %}E-Mail{% endtrans %}</span>
+                <span class="block w-full mt-1 text-gray-500 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-400 dark:focus:shadow-outline-gray form-input">
+                    {{ invite.email }}
+                </span>
+            </label>
+            <label class="block text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">{% trans %}Username{% endtrans %}</span>
+                <span class="block w-full mt-1 text-gray-500 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:text-gray-400 dark:focus:shadow-outline-gray form-input">
+                    {{ invite.username }}
+                </span>
+            </label>
+            {{ form_start(form) }}
+            <label class="block text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">
+                  {% trans %}Password{% endtrans %}
+                </span>
+                {{ form_widget(form.password) }}
+            </label>
+            <label class="block text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">
+                  {% trans %}Repeat password{% endtrans %}
+                </span>
+                {{ form_widget(form.repeatPassword) }}
+            </label>
+            <div class="mt-6">
+                <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
+                    {% trans %}Join{% endtrans %}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

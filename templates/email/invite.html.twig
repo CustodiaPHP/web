@@ -1,0 +1,32 @@
+{% apply inline_css(encore_entry_css_source('app'), encore_entry_css_source('tailwind')) %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body class="w-full h-full bg-gray-200 dark:bg-gray-800">
+        <div class="flex justify-center items-center py-16">
+            <div class="bg-white dark:bg-gray-600 border border-gray-300 w-1/3 rounded flex flex-col">
+                <div class="border-b border-b-gray-300 p-4 rounded-t text-center">
+                    <h1 class="dark:text-white font-semibold text-xl">{{ settingsHelper.general('page_name') }} {% trans %}Invitation{% endtrans %}</h1>
+                </div>
+                <div class="p-4">
+                    <p>{% trans with {'%username%': invite.username} %}Hey %username%{% endtrans %},</p>
+                    <p class="mt-4">
+                        you were invited to join the team <strong>{{ settingsHelper.general('page_name') }}</strong>.<br>
+                        If you want to join the team, click the button below to create an account.<br>
+                        If you don't want to join the team, you can ignore this email.<br>
+                        <strong>This invitation will only work for 1 day.</strong>
+                    </p>
+                    <div class="mt-8 flex flex-row justify-center">
+                        <a href="{{ url('app_invite_join', {'code': invite.code}) }}" class="bg-blue-500 dark:bg-blue-600 text-white dark:text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 dark:hover:bg-blue-700">Join the team</a>
+                    </div>
+                </div>
+                <div class="border-t border-t-gray-300 p-4 rounded-b text-center">
+                    <p>Powered by <a href="https://custodiaphp.de" class="text-green-500">CustodiaPHP</a></p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endapply %}
